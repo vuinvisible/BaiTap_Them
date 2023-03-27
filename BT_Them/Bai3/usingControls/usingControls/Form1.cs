@@ -12,6 +12,7 @@ namespace usingControls
 {
     public partial class FormMain : Form
     {
+        String tmp;
         public FormMain()
         {
             InitializeComponent();
@@ -46,15 +47,17 @@ namespace usingControls
 
         private void btApply_Click(object sender, EventArgs e)
         {
-            lbInfo.Text = (chkIsMale.Checked ? "Anh " : "Chị ") + txtName.Text + ". Môn học yêu thích: ";
+            String tt;
+            tt = (chkIsMale.Checked ? "Anh " : "Chị ") + txtName.Text + ". Môn học yêu thích: ";
             if (chkOOP.Checked)
-                lbInfo.Text += " " + chkOOP.Text + ", ";
+                tt +=  " "+ chkOOP.Text + ", ";
             if (chkAnD.Checked)
-                lbInfo.Text += " " + chkAnD.Text + ", ";
+                tt += " " + chkAnD.Text + ", ";
             if (chkNET.Checked)
-                lbInfo.Text += " " + chkNET.Text + ", ";
+                tt += " " + chkNET.Text + ", ";
             if (chkOther.Checked && txtOther.Text.Trim() != "")
-                lbInfo.Text += " " + txtOther.Text + ", ";
+                tt += " " + txtOther.Text + ", ";
+            listBox1.Items.Add(tt);
         }
 
         private void lbInfo_Click(object sender, EventArgs e)
@@ -65,6 +68,16 @@ namespace usingControls
         private void tmrScroll_Tick(object sender, EventArgs e)
         {
             lbInfo.Text = lbInfo.Text.Substring(1) + lbInfo.Text.Substring(0, 1);
+        }
+
+        private void selectToolStripMenuItem_Click(object sender, EventArgs e)
+        { 
+            lbInfo.Text = tmp;
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tmp = listBox1.SelectedItem.ToString();
         }
     }
 }

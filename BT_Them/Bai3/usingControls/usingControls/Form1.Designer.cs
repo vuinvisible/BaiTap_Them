@@ -48,10 +48,15 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbInfo = new System.Windows.Forms.Label();
             this.tmrScroll = new System.Windows.Forms.Timer(this.components);
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.contextMenuTrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picIMG)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.contextMenuTrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb1Name
@@ -186,7 +191,7 @@
             // 
             this.lbName.AutoSize = true;
             this.lbName.BackColor = System.Drawing.Color.Transparent;
-            this.lbName.Location = new System.Drawing.Point(6, 154);
+            this.lbName.Location = new System.Drawing.Point(6, 156);
             this.lbName.Name = "lbName";
             this.lbName.Size = new System.Drawing.Size(74, 13);
             this.lbName.TabIndex = 0;
@@ -217,17 +222,17 @@
             this.groupBox3.Controls.Add(this.lbInfo);
             this.groupBox3.Location = new System.Drawing.Point(29, 366);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(509, 97);
+            this.groupBox3.Size = new System.Drawing.Size(509, 77);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             // 
             // lbInfo
             // 
             this.lbInfo.AutoSize = true;
-            this.lbInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbInfo.Location = new System.Drawing.Point(6, 32);
+            this.lbInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbInfo.Location = new System.Drawing.Point(6, 26);
             this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(240, 39);
+            this.lbInfo.Size = new System.Drawing.Size(190, 31);
             this.lbInfo.TabIndex = 10;
             this.lbInfo.Text = "Chưa cập nhật";
             this.lbInfo.Click += new System.EventHandler(this.lbInfo_Click);
@@ -237,11 +242,44 @@
             this.tmrScroll.Interval = 120;
             this.tmrScroll.Tick += new System.EventHandler(this.tmrScroll_Tick);
             // 
+            // listBox1
+            // 
+            this.listBox1.ContextMenuStrip = this.contextMenuTrip1;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(29, 477);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(509, 95);
+            this.listBox1.TabIndex = 11;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // contextMenuTrip1
+            // 
+            this.contextMenuTrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.contextMenuTrip1.Name = "contextMenuTrip1";
+            this.contextMenuTrip1.Size = new System.Drawing.Size(108, 48);
+            this.contextMenuTrip1.Text = "Select";
+            // 
+            // selectToolStripMenuItem
+            // 
+            this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.selectToolStripMenuItem.Text = "Select";
+            this.selectToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 492);
+            this.ClientSize = new System.Drawing.Size(567, 584);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btApply);
             this.Controls.Add(this.btSelect);
@@ -263,6 +301,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picIMG)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.contextMenuTrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,6 +328,10 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lbInfo;
         private System.Windows.Forms.Timer tmrScroll;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuTrip1;
+        private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 
