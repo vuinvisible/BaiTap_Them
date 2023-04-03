@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace usingControls
 {
     public partial class FormMain : Form
     {
-        String tmp;
+        String tmp, fileName;
+        int tmp1;
         public FormMain()
         {
             InitializeComponent();
@@ -71,13 +73,59 @@ namespace usingControls
         }
 
         private void selectToolStripMenuItem_Click(object sender, EventArgs e)
-        { 
+        {
+            tmp = listBox1.SelectedItem.ToString();
             lbInfo.Text = tmp;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tmp = listBox1.SelectedItem.ToString();
+            
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tmp1 = listBox1.SelectedIndex;
+            DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes)
+            {
+                listBox1.Items.RemoveAt(tmp1);
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Filter = "Text File|*.txt";
+            op.Title = "Chọn file";
+            fileName = op.FileName;
+            if(op.ShowDialog() == DialogResult.Yes)
+            {
+                try
+                {
+                  
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("Không tải được file!");
+                }
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "Text File|*.txt";
+            StreamWriter writer = new StreamWriter(fileName);
+            if(sv.ShowDialog() == DialogResult.Yes)
+            {
+                foreach(string st in listBox1.Items)
+                {
+                    writer.WriteLine(st);
+                }
+                writer.Close();
+            }
+        }
+
     }
 }
