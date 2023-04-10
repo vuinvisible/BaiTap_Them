@@ -13,7 +13,7 @@ namespace usingControls
 {
     public partial class FormMain : Form
     {
-        String tmp, fileName;
+        String tmp;
         int tmp1;
         public FormMain()
         {
@@ -98,12 +98,13 @@ namespace usingControls
             OpenFileDialog op = new OpenFileDialog();
             op.Filter = "Text File|*.txt";
             op.Title = "Chọn file";
-            fileName = op.FileName;
-            if(op.ShowDialog() == DialogResult.Yes)
+            if(op.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                  
+                    listBox1.Items.Clear();
+                    string[] lines = File.ReadAllLines(op.FileName);
+                    listBox1.Items.AddRange(lines);
                 }
                 catch(Exception)
                 {
@@ -116,15 +117,25 @@ namespace usingControls
         {
             SaveFileDialog sv = new SaveFileDialog();
             sv.Filter = "Text File|*.txt";
-            StreamWriter writer = new StreamWriter(fileName);
-            if(sv.ShowDialog() == DialogResult.Yes)
+            try
             {
-                foreach(string st in listBox1.Items)
+                if(sv.ShowDialog() == DialogResult.OK)
                 {
-                    writer.WriteLine(st);
+                    using(StreamWriter writer = new StreamWriter(sv.FileName))
+                    {
+                        foreach(string st in listBox1.Items)
+                        {
+                            writer.WriteLine(st);
+                        }
+                    }
                 }
-                writer.Close();
+                MessageBox.Show("Lưu thành công!");
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Lỗi! Lưu thất bại!");
+            }
+            
         }
 
     }
