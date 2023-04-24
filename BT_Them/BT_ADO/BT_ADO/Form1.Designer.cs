@@ -132,6 +132,7 @@
             this.btTimKiem.TabIndex = 11;
             this.btTimKiem.Text = "Tìm kiếm";
             this.btTimKiem.UseVisualStyleBackColor = true;
+            this.btTimKiem.Click += new System.EventHandler(this.btTimKiem_Click);
             // 
             // btThem
             // 
@@ -141,6 +142,7 @@
             this.btThem.TabIndex = 12;
             this.btThem.Text = "Thêm";
             this.btThem.UseVisualStyleBackColor = true;
+            this.btThem.Click += new System.EventHandler(this.btThem_Click);
             // 
             // lbNgaySinh
             // 
