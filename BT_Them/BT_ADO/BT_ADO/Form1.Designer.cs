@@ -40,14 +40,16 @@
             this.btTimKiem = new System.Windows.Forms.Button();
             this.btThem = new System.Windows.Forms.Button();
             this.lbNgaySinh = new System.Windows.Forms.Label();
-            this.tbNgaysinh = new System.Windows.Forms.TextBox();
-            this.lbGioiTinh = new System.Windows.Forms.Label();
-            this.tbGioiTinh = new System.Windows.Forms.TextBox();
             this.lbChucVu = new System.Windows.Forms.Label();
             this.tbChucVu = new System.Windows.Forms.TextBox();
             this.btCapNhat = new System.Windows.Forms.Button();
             this.btXoa = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rdbNam = new System.Windows.Forms.RadioButton();
+            this.rdbNu = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridDSNV)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbMaNV
@@ -119,7 +121,7 @@
             // gridDSNV
             // 
             this.gridDSNV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridDSNV.Location = new System.Drawing.Point(38, 213);
+            this.gridDSNV.Location = new System.Drawing.Point(38, 223);
             this.gridDSNV.Name = "gridDSNV";
             this.gridDSNV.Size = new System.Drawing.Size(721, 213);
             this.gridDSNV.TabIndex = 10;
@@ -153,41 +155,19 @@
             this.lbNgaySinh.TabIndex = 13;
             this.lbNgaySinh.Text = "Ngày sinh";
             // 
-            // tbNgaysinh
-            // 
-            this.tbNgaysinh.Location = new System.Drawing.Point(116, 67);
-            this.tbNgaysinh.Name = "tbNgaysinh";
-            this.tbNgaysinh.Size = new System.Drawing.Size(172, 20);
-            this.tbNgaysinh.TabIndex = 14;
-            // 
-            // lbGioiTinh
-            // 
-            this.lbGioiTinh.AutoSize = true;
-            this.lbGioiTinh.Location = new System.Drawing.Point(354, 74);
-            this.lbGioiTinh.Name = "lbGioiTinh";
-            this.lbGioiTinh.Size = new System.Drawing.Size(47, 13);
-            this.lbGioiTinh.TabIndex = 15;
-            this.lbGioiTinh.Text = "Giới tính";
-            // 
-            // tbGioiTinh
-            // 
-            this.tbGioiTinh.Location = new System.Drawing.Point(407, 67);
-            this.tbGioiTinh.Name = "tbGioiTinh";
-            this.tbGioiTinh.Size = new System.Drawing.Size(172, 20);
-            this.tbGioiTinh.TabIndex = 16;
-            // 
             // lbChucVu
             // 
             this.lbChucVu.AutoSize = true;
-            this.lbChucVu.Location = new System.Drawing.Point(354, 115);
+            this.lbChucVu.Location = new System.Drawing.Point(354, 157);
             this.lbChucVu.Name = "lbChucVu";
             this.lbChucVu.Size = new System.Drawing.Size(47, 13);
             this.lbChucVu.TabIndex = 17;
             this.lbChucVu.Text = "Chức vụ";
+            this.lbChucVu.Click += new System.EventHandler(this.lbChucVu_Click);
             // 
             // tbChucVu
             // 
-            this.tbChucVu.Location = new System.Drawing.Point(413, 113);
+            this.tbChucVu.Location = new System.Drawing.Point(413, 157);
             this.tbChucVu.Name = "tbChucVu";
             this.tbChucVu.Size = new System.Drawing.Size(166, 20);
             this.tbChucVu.TabIndex = 18;
@@ -200,6 +180,7 @@
             this.btCapNhat.TabIndex = 19;
             this.btCapNhat.Text = "Cập nhật";
             this.btCapNhat.UseVisualStyleBackColor = true;
+            this.btCapNhat.Click += new System.EventHandler(this.btCapNhat_Click);
             // 
             // btXoa
             // 
@@ -210,18 +191,57 @@
             this.btXoa.Text = "Xóa";
             this.btXoa.UseVisualStyleBackColor = true;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(116, 74);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 21;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rdbNu);
+            this.groupBox1.Controls.Add(this.rdbNam);
+            this.groupBox1.Location = new System.Drawing.Point(357, 61);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(250, 77);
+            this.groupBox1.TabIndex = 22;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Giới tính";
+            // 
+            // rdbNam
+            // 
+            this.rdbNam.AutoSize = true;
+            this.rdbNam.Checked = true;
+            this.rdbNam.Location = new System.Drawing.Point(6, 30);
+            this.rdbNam.Name = "rdbNam";
+            this.rdbNam.Size = new System.Drawing.Size(47, 17);
+            this.rdbNam.TabIndex = 0;
+            this.rdbNam.TabStop = true;
+            this.rdbNam.Text = "Nam";
+            this.rdbNam.UseVisualStyleBackColor = true;
+            // 
+            // rdbNu
+            // 
+            this.rdbNu.AutoSize = true;
+            this.rdbNu.Location = new System.Drawing.Point(88, 30);
+            this.rdbNu.Name = "rdbNu";
+            this.rdbNu.Size = new System.Drawing.Size(39, 17);
+            this.rdbNu.TabIndex = 1;
+            this.rdbNu.Text = "Nữ";
+            this.rdbNu.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 448);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.btXoa);
             this.Controls.Add(this.btCapNhat);
             this.Controls.Add(this.tbChucVu);
             this.Controls.Add(this.lbChucVu);
-            this.Controls.Add(this.tbGioiTinh);
-            this.Controls.Add(this.lbGioiTinh);
-            this.Controls.Add(this.tbNgaysinh);
             this.Controls.Add(this.lbNgaySinh);
             this.Controls.Add(this.btThem);
             this.Controls.Add(this.btTimKiem);
@@ -238,6 +258,8 @@
             this.Text = "Demo QLNS";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridDSNV)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,13 +279,14 @@
         private System.Windows.Forms.Button btTimKiem;
         private System.Windows.Forms.Button btThem;
         private System.Windows.Forms.Label lbNgaySinh;
-        private System.Windows.Forms.TextBox tbNgaysinh;
-        private System.Windows.Forms.Label lbGioiTinh;
-        private System.Windows.Forms.TextBox tbGioiTinh;
         private System.Windows.Forms.Label lbChucVu;
         private System.Windows.Forms.TextBox tbChucVu;
         private System.Windows.Forms.Button btCapNhat;
         private System.Windows.Forms.Button btXoa;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rdbNu;
+        private System.Windows.Forms.RadioButton rdbNam;
     }
 }
 

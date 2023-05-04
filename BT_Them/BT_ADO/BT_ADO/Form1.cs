@@ -25,15 +25,16 @@ namespace BT_ADO
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string sqlDSNV = "select * from DSNV";
+           
+            load_Grid();
+            load_CBPhong();
+        }
+        public void load_CBPhong()
+        {
+
             string sqlDMP = "select * from DMPHONG";
-            da = new SqlDataAdapter(sqlDSNV, conn);
-            da.Fill(ds, "DSNV");
             da = new SqlDataAdapter(sqlDMP, conn);
             da.Fill(ds, "DMPHONG");
-
-            gridDSNV.DataSource = ds.Tables["DSNV"];
-
             cbbPhongBan.DataSource = ds.Tables["DMPHONG"];
             cbbPhongBan.DisplayMember = "TenPhong";
             cbbPhongBan.ValueMember = "MaPhong";
@@ -49,104 +50,98 @@ namespace BT_ADO
 
         private void btThem_Click(object sender, EventArgs e)
         {
-            try
+
+            string sqlCheck = "select * from DSNV where MaNV = @manv";
+            using (SqlConnection conn1 = new SqlConnection(conn))
             {
-
-                string sql = "insert into DSNV(MaNV, HoTen, NgaySinh, GioiTinh, MaPhong, HeSoLuong, MaChucVu) " +
-                             "values (@manv, @ht, @ngs, @gt, @maphong, @hsl, @mcv)";
-
-                //cmd.CommandText = "insert into DSNV(MaNV, HoTen, NgaySinh, GioiTinh, MaPhong, HeSoLuong, MaChucVu) " +
-                //                  "values (@manv, @ht, @ngs, @gt, @maphong, @hsl, @mcv)";
-
-                /*string sqlCheck = "select * from DSNV where MaNV = @manv";
-                using (SqlConnection conn1 = new SqlConnection(conn))
+                using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn1))
                 {
-                    using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn1))
+                    cmdCheck.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
+                    conn1.Open();
+                    SqlDataReader dr = cmdCheck.ExecuteReader();
+                    if (dr.HasRows)
                     {
-                        cmdCheck.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
-                        conn1.Open();
-                        SqlDataReader dr = cmdCheck.ExecuteReader();
-                        if (dr.HasRows)
-                        {
-                            MessageBox.Show("Mã nhân viên đã tồn tại!");
-                            return;
-                        }
-                        conn1.Close();
+                        MessageBox.Show("Mã nhân viên đã tồn tại!");
+                        return;
                     }
-                }*/
-
-                // Kiểm tra định dạng ngày tháng
-                DateTime ngaysinh;
-                if (!DateTime.TryParseExact(tbNgaysinh.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out ngaysinh))
-                {
-                    MessageBox.Show("Định dạng ngày sinh không đúng (dd/MM/yyyy)!");
-                    return;
+                    conn1.Close();
                 }
+            }
 
-                using (SqlConnection conn1 = new SqlConnection(conn))
+            using (SqlConnection conn1 = new SqlConnection(conn))
                 {
-                    using(SqlCommand cmd = new SqlCommand(sql, conn1))
+                    string sql = "insert into DSNV(MaNV, HoTen, NgaySinh, GioiTinh, MaPhong, HeSoLuong, MaChucVu) " +
+                            "values (@manv, @ht, @ngs, @gt, @maphong, @hsl, @mcv)";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn1))
                     {
-                        cmd.Parameters.Add("@manv", SqlDbType.VarChar);
-                        cmd.Parameters.Add("@ht", SqlDbType.NVarChar);
-                        cmd.Parameters.Add("@ngs", SqlDbType.DateTime);
-                        cmd.Parameters.Add("@gt", SqlDbType.Bit);
-                        cmd.Parameters.Add("@maphong", SqlDbType.VarChar);
-                        cmd.Parameters.Add("@hsl", SqlDbType.Float);
-                        cmd.Parameters.Add("@mcv", SqlDbType.VarChar);
+                    cmd.Parameters.Add("@manv", SqlDbType.VarChar);
+                    cmd.Parameters.Add("@ht", SqlDbType.NVarChar);
+                    cmd.Parameters.Add("@ngs", SqlDbType.DateTime);
+                    cmd.Parameters.Add("@gt", SqlDbType.Bit);
+                    cmd.Parameters.Add("@maphong", SqlDbType.VarChar);
+                    cmd.Parameters.Add("@hsl", SqlDbType.Float);
+                    cmd.Parameters.Add("@mcv", SqlDbType.VarChar);
+
+                     Boolean gt;
+                     if (rdbNam.Checked == true)
+                         gt = true;
+                     else
+                         gt = false;
 
                         cmd.Parameters["@manv"].Value = tbMaNV.Text.Trim();
                         cmd.Parameters["@ht"].Value = tbHoTen.Text.Trim();
-                        cmd.Parameters["@ngs"].Value = ngaysinh;
-                        cmd.Parameters["@gt"].Value = tbGioiTinh.Text.Trim() == "1";
+                        cmd.Parameters["@ngs"].Value = dateTimePicker1.Value;
+                        cmd.Parameters["@gt"].Value = gt;
                         cmd.Parameters["@maphong"].Value = cbbPhongBan.SelectedValue.ToString();
                         cmd.Parameters["@hsl"].Value = Convert.ToDouble(tbHSL.Text.Trim());
                         cmd.Parameters["@mcv"].Value = tbChucVu.Text.Trim().ToUpper();
 
                         conn1.Open();
-                        int rowAffected = cmd.ExecuteNonQuery();
-                        conn1.Close();
-                        if(rowAffected > 0)
+                        int result = cmd.ExecuteNonQuery();
+                      //  conn1.Close();
+                        if(result > 0)
                             MessageBox.Show("Thêm thành công!");
                         else
                             MessageBox.Show("Thêm thất bại!");
+
+                     load_Grid();
                     }
                 }
                 
-            }
-            catch (Exception)
-            {
-                string sqlCheck = "select * from DSNV where MaNV = @manv";
-                using (SqlConnection conn1 = new SqlConnection(conn))
-                {
-                    using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn1))
-                    {
-                        cmdCheck.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
-                        conn1.Open();
-                        SqlDataReader dr = cmdCheck.ExecuteReader();
-                        if (dr.HasRows)
-                        {
-                            MessageBox.Show("Mã nhân viên đã tồn tại!");
-                            return;
-                        }
-                        conn1.Close();
-                    }
-                }
-      
-                if (string.IsNullOrEmpty(tbMaNV.Text.Trim()) || string.IsNullOrEmpty(tbHoTen.Text.Trim()) ||
-                    string.IsNullOrEmpty(tbNgaysinh.Text.Trim()) || string.IsNullOrEmpty(tbGioiTinh.Text.Trim()) ||
-                    cbbPhongBan.SelectedIndex == -1 || string.IsNullOrEmpty(tbHSL.Text.Trim()) ||
-                    string.IsNullOrEmpty(tbChucVu.Text.Trim()))
-                {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
-                    return;
-                }
-                //MessageBox.Show("Lỗi: " + ex.Message);
-            }
-            
+                       
+        }
+        public void load_Grid()
+        {
+            string sqlDSNV = "select * from DSNV";
+            da = new SqlDataAdapter(sqlDSNV, conn);
+            da.Fill(ds, "DSNV");
+            gridDSNV.DataSource = ds.Tables["DSNV"];
         }
 
         private void btTimKiem_Click(object sender, EventArgs e)
+        {
+            string sql = "select * from DSNV where HoTen like N'%" + tbHoTen.Text + "'";
+            DataTable dt = new DataTable();
+            da = new SqlDataAdapter(sql, conn);
+            da.Fill(dt);
+            gridDSNV.DataSource = dt;
+        }
+
+        private void btCapNhat_Click(object sender, EventArgs e)
+        {
+            string sqlUP = "select * from DSNV where MaNV = '@manv'";
+           /* using(SqlConnection conn1 = new SqlConnection(conn))
+            {
+                using(SqlCommand cmd = new SqlCommand(sqlUP, conn1))
+                {
+                    cmd.Parameters.Add("@manv", SqlDbType.VarChar);
+                    cmd.Parameters["@manv"].Value = tbMaNV.Text.Trim();
+                    da = new SqlDataAdapter();
+                }
+            }*/
+        }
+
+        private void lbChucVu_Click(object sender, EventArgs e)
         {
 
         }
