@@ -44,10 +44,10 @@
             this.tbChucVu = new System.Windows.Forms.TextBox();
             this.btCapNhat = new System.Windows.Forms.Button();
             this.btXoa = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpNgaySinh = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdbNam = new System.Windows.Forms.RadioButton();
             this.rdbNu = new System.Windows.Forms.RadioButton();
+            this.rdbNam = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridDSNV)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -121,9 +121,9 @@
             // gridDSNV
             // 
             this.gridDSNV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridDSNV.Location = new System.Drawing.Point(38, 223);
+            this.gridDSNV.Location = new System.Drawing.Point(12, 223);
             this.gridDSNV.Name = "gridDSNV";
-            this.gridDSNV.Size = new System.Drawing.Size(721, 213);
+            this.gridDSNV.Size = new System.Drawing.Size(776, 213);
             this.gridDSNV.TabIndex = 10;
             // 
             // btTimKiem
@@ -163,7 +163,6 @@
             this.lbChucVu.Size = new System.Drawing.Size(47, 13);
             this.lbChucVu.TabIndex = 17;
             this.lbChucVu.Text = "Chức vụ";
-            this.lbChucVu.Click += new System.EventHandler(this.lbChucVu_Click);
             // 
             // tbChucVu
             // 
@@ -190,13 +189,14 @@
             this.btXoa.TabIndex = 20;
             this.btXoa.Text = "Xóa";
             this.btXoa.UseVisualStyleBackColor = true;
+            this.btXoa.Click += new System.EventHandler(this.btXoa_Click);
             // 
-            // dateTimePicker1
+            // dtpNgaySinh
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(116, 74);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 21;
+            this.dtpNgaySinh.Location = new System.Drawing.Point(116, 74);
+            this.dtpNgaySinh.Name = "dtpNgaySinh";
+            this.dtpNgaySinh.Size = new System.Drawing.Size(200, 20);
+            this.dtpNgaySinh.TabIndex = 21;
             // 
             // groupBox1
             // 
@@ -208,6 +208,16 @@
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Giới tính";
+            // 
+            // rdbNu
+            // 
+            this.rdbNu.AutoSize = true;
+            this.rdbNu.Location = new System.Drawing.Point(88, 30);
+            this.rdbNu.Name = "rdbNu";
+            this.rdbNu.Size = new System.Drawing.Size(39, 17);
+            this.rdbNu.TabIndex = 1;
+            this.rdbNu.Text = "Nữ";
+            this.rdbNu.UseVisualStyleBackColor = true;
             // 
             // rdbNam
             // 
@@ -221,23 +231,13 @@
             this.rdbNam.Text = "Nam";
             this.rdbNam.UseVisualStyleBackColor = true;
             // 
-            // rdbNu
-            // 
-            this.rdbNu.AutoSize = true;
-            this.rdbNu.Location = new System.Drawing.Point(88, 30);
-            this.rdbNu.Name = "rdbNu";
-            this.rdbNu.Size = new System.Drawing.Size(39, 17);
-            this.rdbNu.TabIndex = 1;
-            this.rdbNu.Text = "Nữ";
-            this.rdbNu.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 448);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpNgaySinh);
             this.Controls.Add(this.btXoa);
             this.Controls.Add(this.btCapNhat);
             this.Controls.Add(this.tbChucVu);
@@ -283,7 +283,7 @@
         private System.Windows.Forms.TextBox tbChucVu;
         private System.Windows.Forms.Button btCapNhat;
         private System.Windows.Forms.Button btXoa;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpNgaySinh;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rdbNu;
         private System.Windows.Forms.RadioButton rdbNam;
