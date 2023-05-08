@@ -47,6 +47,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rdbNu = new System.Windows.Forms.RadioButton();
             this.rdbNam = new System.Windows.Forms.RadioButton();
+            this.cbbChucVu = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridDSNV)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -163,13 +164,6 @@
             this.lbChucVu.TabIndex = 17;
             this.lbChucVu.Text = "Chức vụ";
             // 
-            // tbChucVu
-            // 
-            this.tbChucVu.Location = new System.Drawing.Point(413, 157);
-            this.tbChucVu.Name = "tbChucVu";
-            this.tbChucVu.Size = new System.Drawing.Size(166, 20);
-            this.tbChucVu.TabIndex = 18;
-            // 
             // btCapNhat
             // 
             this.btCapNhat.Location = new System.Drawing.Point(670, 115);
@@ -192,7 +186,7 @@
             // 
             // dtpNgaySinh
             // 
-            this.dtpNgaySinh.Location = new System.Drawing.Point(116, 74);
+            this.dtpNgaySinh.Location = new System.Drawing.Point(116, 64);
             this.dtpNgaySinh.Name = "dtpNgaySinh";
             this.dtpNgaySinh.Size = new System.Drawing.Size(200, 20);
             this.dtpNgaySinh.TabIndex = 21;
@@ -230,16 +224,25 @@
             this.rdbNam.Text = "Nam";
             this.rdbNam.UseVisualStyleBackColor = true;
             // 
+            // cbbChucVu
+            // 
+            this.cbbChucVu.FormattingEnabled = true;
+            this.cbbChucVu.Location = new System.Drawing.Point(417, 154);
+            this.cbbChucVu.Name = "cbbChucVu";
+            this.cbbChucVu.Size = new System.Drawing.Size(162, 21);
+            this.cbbChucVu.TabIndex = 2;
+            this.cbbChucVu.SelectedIndexChanged += new System.EventHandler(this.cbbChucVu_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 448);
+            this.Controls.Add(this.cbbChucVu);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dtpNgaySinh);
             this.Controls.Add(this.btXoa);
             this.Controls.Add(this.btCapNhat);
-            this.Controls.Add(this.tbChucVu);
             this.Controls.Add(this.lbChucVu);
             this.Controls.Add(this.lbNgaySinh);
             this.Controls.Add(this.btThem);
@@ -279,13 +282,13 @@
         private System.Windows.Forms.Button btThem;
         private System.Windows.Forms.Label lbNgaySinh;
         private System.Windows.Forms.Label lbChucVu;
-        private System.Windows.Forms.TextBox tbChucVu;
         private System.Windows.Forms.Button btCapNhat;
         private System.Windows.Forms.Button btXoa;
         private System.Windows.Forms.DateTimePicker dtpNgaySinh;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rdbNu;
         private System.Windows.Forms.RadioButton rdbNam;
+        private System.Windows.Forms.ComboBox cbbChucVu;
     }
 }
 

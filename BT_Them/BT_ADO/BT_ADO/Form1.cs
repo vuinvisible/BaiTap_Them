@@ -25,10 +25,11 @@ namespace BT_ADO
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
             load_Grid();
             load_CBPhong();
+            load_CBChucVu();
         }
+       
         public void load_CBPhong()
         {
             string sqlDMP = "select * from DMPHONG";
@@ -41,153 +42,45 @@ namespace BT_ADO
 
         private void cbbPhongBan_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DataTable dt = new DataTable();
             string sqlDSNV = " select * from DSNV where MaPhong = N'"+ cbbPhongBan.SelectedValue.ToString()+"' ";
             da = new SqlDataAdapter(sqlDSNV, conn);
-            da.Fill(ds, "DSNV1");
-            gridDSNV.DataSource = ds.Tables["DSNV1"];
-        }
-
-        private void btThem_Click(object sender, EventArgs e)
-        {
-            using (SqlConnection conn1 = new SqlConnection(conn))
-                {
-                    string sql = "insert into DSNV(MaNV, HoTen, NgaySinh, GioiTinh, MaPhong, HeSoLuong, MaChucVu) " +
-                                 "values (@manv, @ht, @ngs, @gt, @maphong, @hsl, @mcv)";
-                    using (SqlCommand cmd = new SqlCommand(sql, conn1))
-                    {
-                        cmd.Parameters.Add("@manv", SqlDbType.VarChar);
-                        cmd.Parameters.Add("@ht", SqlDbType.NVarChar);
-                        cmd.Parameters.Add("@ngs", SqlDbType.DateTime);
-                        cmd.Parameters.Add("@gt", SqlDbType.Bit);
-                        cmd.Parameters.Add("@maphong", SqlDbType.VarChar);
-                        cmd.Parameters.Add("@hsl", SqlDbType.Float);
-                        cmd.Parameters.Add("@mcv", SqlDbType.VarChar);
-
-                        if (checkMaNV(tbMaNV.Text.Trim()))
-                        {
-                            MessageBox.Show("Mã nhân viên đã tồn tại!");
-                            return;
-                        }
-
-                        Boolean gt;
-                        if (rdbNam.Checked == true)
-                            gt = true;
-                        else
-                            gt = false;
-
-                         cmd.Parameters["@manv"].Value = tbMaNV.Text.Trim();
-                         cmd.Parameters["@ht"].Value = tbHoTen.Text.Trim();
-                         cmd.Parameters["@ngs"].Value = dtpNgaySinh.Value;
-                         cmd.Parameters["@gt"].Value = gt;
-                         cmd.Parameters["@maphong"].Value = cbbPhongBan.SelectedValue.ToString();
-                         cmd.Parameters["@hsl"].Value = Convert.ToDouble(tbHSL.Text.Trim());
-                         cmd.Parameters["@mcv"].Value = tbChucVu.Text.Trim().ToUpper();
-
-                         conn1.Open();
-                         int result = cmd.ExecuteNonQuery();
-                         conn1.Close();
-                         if(result > 0)
-                             MessageBox.Show("Thêm thành công!");
-                         else
-                             MessageBox.Show("Thêm thất bại!");
-
-                         load_Grid();
-                    }
-                }
-                
-                       
-        }
-        public void load_Grid()
-        {
-            string sqlDSNV = "select * from DSNV";
-            da = new SqlDataAdapter(sqlDSNV, conn);
-            da.Fill(ds, "DSNV");
-            gridDSNV.DataSource = ds.Tables["DSNV"];
-        }
-
-        private void btTimKiem_Click(object sender, EventArgs e)
-        {
-            string sql = "select * from DSNV where HoTen like N'%" + tbHoTen.Text + "'";
-            DataTable dt = new DataTable();
-            da = new SqlDataAdapter(sql, conn);
+            //da.Fill(ds, "DSNV1");
+            //gridDSNV.DataSource = ds.Tables["DSNV1"];
             da.Fill(dt);
             gridDSNV.DataSource = dt;
         }
 
-        private void btCapNhat_Click(object sender, EventArgs e)
+        public void load_CBChucVu()
         {
-            using (SqlConnection conn1 = new SqlConnection(conn))
-            {
-                string sqlUP = "update DSNV set HoTen = @ht, NgaySinh = @ngs, GioiTinh = @gt, MaPhong = @maphong, HeSoLuong = @hsl, MaChucVu = @mcv where MaNV = @manv";
-                using (SqlCommand cmdUP = new SqlCommand(sqlUP, conn1))
-                {
-                    if (!checkMaNV(tbMaNV.Text.Trim()))
-                    {
-                        MessageBox.Show("Mã nhân viên không tồn tại!");
-                        return;
-                    }
-
-                    Boolean gt;
-                    if (rdbNam.Checked == true)
-                        gt = true;
-                    else
-                        gt = false;
-                       
-                    cmdUP.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
-                    cmdUP.Parameters.AddWithValue("@ht", tbHoTen.Text.Trim());
-                    cmdUP.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
-                    cmdUP.Parameters.AddWithValue("@gt", gt);
-                    cmdUP.Parameters.AddWithValue("@maphong", cbbPhongBan.SelectedValue.ToString());
-                    cmdUP.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbHSL.Text.Trim()));
-                    cmdUP.Parameters.AddWithValue("@mcv", tbChucVu.Text.Trim().ToUpper());
-
-                    conn1.Open();
-                    int result = cmdUP.ExecuteNonQuery();
-                    conn1.Close();
-
-                    if (result > 0)
-                        MessageBox.Show("Cập nhật thành công!"); 
-                    else
-                        MessageBox.Show("Cập nhật thất bại!");
-
-                    load_Grid();
-                }
-                        
-            }
+            string sqlCV = "select * from CHUCVU";
+            da = new SqlDataAdapter(sqlCV, conn);
+            da.Fill(ds, "CHUCVU");
+            cbbChucVu.DataSource = ds.Tables["CHUCVU"];
+            cbbChucVu.DisplayMember = "TenChucVu";
+            cbbChucVu.ValueMember = "MaChucVu";
         }
 
-        private void btXoa_Click(object sender, EventArgs e)
+        private void cbbChucVu_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using(SqlConnection conn1 = new SqlConnection(conn))
-            {
-                string sqlDel = "delete from DSNV where MaNV = @manv";
-                using(SqlCommand cmdDel = new SqlCommand(sqlDel, conn1))
-                {
+            DataTable dt = new DataTable();
+            string sqlDSNV = " select * from DSNV where MaChucVu = N'" + cbbChucVu.SelectedValue.ToString() + "' ";
+            da = new SqlDataAdapter(sqlDSNV, conn);
+            //da.Fill(ds, "DSNV2");
+            //gridDSNV.DataSource = ds.Tables["DSNV2"];
+            da.Fill(dt);
+            gridDSNV.DataSource = dt;
+        }
 
-                    cmdDel.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
-
-                    if (!checkMaNV(tbMaNV.Text.Trim()))
-                    {
-                        MessageBox.Show("Mã nhân viên không tồn tại!");
-                        return;
-                    }
-                        
-                    DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        conn1.Open();
-                        int result1 = cmdDel.ExecuteNonQuery();
-                        conn1.Close();
-                        if (result1 > 0)
-                            MessageBox.Show("Xóa thành công!");
-                        else
-                            MessageBox.Show("Xóa thất bại!");
-                        load_Grid();
-                    }
-                   
-
-                }
-            }
+        public void load_Grid()
+        {
+            DataTable dt = new DataTable();
+            string sqlDSNV = "select * from DSNV";
+            da = new SqlDataAdapter(sqlDSNV, conn);
+            //da.Fill(ds, "DSNV");
+            //gridDSNV.DataSource = ds.Tables["DSNV"];
+            da.Fill(dt);
+            gridDSNV.DataSource = dt;
         }
 
         public bool checkMaNV(string manv)
@@ -204,5 +97,148 @@ namespace BT_ADO
                 }
             }
         }
+
+        private void btThem_Click(object sender, EventArgs e)
+        {
+            if (checkMaNV(tbMaNV.Text.Trim()))
+            {
+                MessageBox.Show("Mã nhân viên đã tồn tại!");
+                return;
+            }
+
+            using (SqlConnection conn1 = new SqlConnection(conn))
+                {
+                    string sql = "insert into DSNV(MaNV, HoTen, NgaySinh, GioiTinh, MaPhong, HeSoLuong, MaChucVu) " +
+                                 "values (@manv, @ht, @ngs, @gt, @maphong, @hsl, @mcv)";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn1))
+                    {
+                        Boolean gt;
+                        if (rdbNam.Checked == true)
+                            gt = true;
+                        else
+                            gt = false;
+
+                        if(string.IsNullOrEmpty(tbMaNV.Text) || string.IsNullOrEmpty(tbHoTen.Text) || string.IsNullOrEmpty(tbHSL.Text))
+                        {
+                            MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                            return;
+                        }
+
+                        cmd.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
+                        cmd.Parameters.AddWithValue("@ht", tbHoTen.Text.Trim());
+                        cmd.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
+                        cmd.Parameters.AddWithValue("@gt", gt);
+                        cmd.Parameters.AddWithValue("@maphong", cbbPhongBan.SelectedValue.ToString());
+                        cmd.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbHSL.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
+
+                        conn1.Open();
+                             int result = cmd.ExecuteNonQuery();
+                             conn1.Close();
+                             if(result > 0)
+                                 MessageBox.Show("Thêm thành công!");
+                             else
+                                 MessageBox.Show("Thêm thất bại!");
+                        load_Grid();
+                    }
+                }      
+                       
+        }
+
+        private void btTimKiem_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbHoTen.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên!");
+                return;
+            }
+               
+            string sql = "select * from DSNV where HoTen like N'%" + tbHoTen.Text + "%'";
+            DataTable dt = new DataTable();
+            da = new SqlDataAdapter(sql, conn);
+            da.Fill(dt);
+            gridDSNV.DataSource = dt;
+        }
+
+        private void btCapNhat_Click(object sender, EventArgs e)
+        {
+            if (!checkMaNV(tbMaNV.Text.Trim()))
+            {
+                MessageBox.Show("Mã nhân viên không tồn tại!");
+                return;
+            }
+
+            using (SqlConnection conn1 = new SqlConnection(conn))
+            {
+                string sqlUP = "update DSNV set HoTen = @ht, NgaySinh = @ngs, GioiTinh = @gt, MaPhong = @maphong, HeSoLuong = @hsl, MaChucVu = @mcv where MaNV = @manv";
+                using (SqlCommand cmdUP = new SqlCommand(sqlUP, conn1))
+                {
+
+                    Boolean gt;
+                    if (rdbNam.Checked == true)
+                        gt = true;
+                    else
+                        gt = false;
+
+                    if (string.IsNullOrEmpty(tbMaNV.Text) || string.IsNullOrEmpty(tbHoTen.Text) || string.IsNullOrEmpty(tbHSL.Text))
+                    {
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                        return;
+                    }
+
+                    cmdUP.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@ht", tbHoTen.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
+                    cmdUP.Parameters.AddWithValue("@gt", gt);
+                    cmdUP.Parameters.AddWithValue("@maphong", cbbPhongBan.SelectedValue.ToString());
+                    cmdUP.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbHSL.Text.Trim()));
+                    cmdUP.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
+
+                    conn1.Open();
+                    int result = cmdUP.ExecuteNonQuery();
+                    conn1.Close();
+
+                    if (result > 0)
+                        MessageBox.Show("Cập nhật thành công!"); 
+                    else
+                        MessageBox.Show("Cập nhật thất bại!");
+                    load_Grid();
+                }
+                        
+            }
+        }
+
+        private void btXoa_Click(object sender, EventArgs e)
+        {
+            if (!checkMaNV(tbMaNV.Text.Trim()))
+            {
+                MessageBox.Show("Mã nhân viên không tồn tại!");
+                return;
+            }
+
+            using (SqlConnection conn1 = new SqlConnection(conn))
+            {
+                string sqlDel = "delete from DSNV where MaNV = @manv";
+                using(SqlCommand cmdDel = new SqlCommand(sqlDel, conn1))
+                {
+
+                    cmdDel.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
+
+                    DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        conn1.Open();
+                        int result1 = cmdDel.ExecuteNonQuery();
+                        conn1.Close();
+                        if (result1 > 0)
+                            MessageBox.Show("Xóa thành công!");
+                        else
+                            MessageBox.Show("Xóa thất bại!");
+                        load_Grid();
+                    }
+                }
+            }
+        }
+       
     }
 }
