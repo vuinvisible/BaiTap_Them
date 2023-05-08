@@ -41,7 +41,6 @@
             this.btThem = new System.Windows.Forms.Button();
             this.lbNgaySinh = new System.Windows.Forms.Label();
             this.lbChucVu = new System.Windows.Forms.Label();
-            this.tbChucVu = new System.Windows.Forms.TextBox();
             this.btCapNhat = new System.Windows.Forms.Button();
             this.btXoa = new System.Windows.Forms.Button();
             this.dtpNgaySinh = new System.Windows.Forms.DateTimePicker();
