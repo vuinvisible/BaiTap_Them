@@ -124,6 +124,13 @@ namespace BT_ADO
                             return;
                         }
 
+                        double hsl;
+                        if (!double.TryParse(tbHSL.Text.Trim(), out hsl))
+                        {
+                            MessageBox.Show("Hệ số lương phải là một số!");
+                            return;
+                        }
+
                         cmd.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
                         cmd.Parameters.AddWithValue("@ht", tbHoTen.Text.Trim());
                         cmd.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
@@ -134,11 +141,11 @@ namespace BT_ADO
 
                         conn1.Open();
                              int result = cmd.ExecuteNonQuery();
-                             conn1.Close();
-                             if(result > 0)
-                                 MessageBox.Show("Thêm thành công!");
-                             else
-                                 MessageBox.Show("Thêm thất bại!");
+                        
+                        if(result > 0)
+                            MessageBox.Show("Thêm thành công!");
+                        else
+                            MessageBox.Show("Thêm thất bại!");
                         load_Grid();
                     }
                 }      
@@ -186,6 +193,13 @@ namespace BT_ADO
                         return;
                     }
 
+                    double hsl;
+                    if (!double.TryParse(tbHSL.Text.Trim(), out hsl))
+                    {
+                        MessageBox.Show("Hệ số lương phải là một số!");
+                        return;
+                    }
+
                     cmdUP.Parameters.AddWithValue("@manv", tbMaNV.Text.Trim());
                     cmdUP.Parameters.AddWithValue("@ht", tbHoTen.Text.Trim());
                     cmdUP.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
@@ -196,7 +210,6 @@ namespace BT_ADO
 
                     conn1.Open();
                     int result = cmdUP.ExecuteNonQuery();
-                    conn1.Close();
 
                     if (result > 0)
                         MessageBox.Show("Cập nhật thành công!"); 
@@ -229,7 +242,7 @@ namespace BT_ADO
                     {
                         conn1.Open();
                         int result1 = cmdDel.ExecuteNonQuery();
-                        conn1.Close();
+ 
                         if (result1 > 0)
                             MessageBox.Show("Xóa thành công!");
                         else
