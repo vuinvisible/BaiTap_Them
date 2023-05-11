@@ -32,6 +32,9 @@ namespace BT_LINQ
         {
             Table<DSNV> dsnv = db.GetTable<DSNV>();
             gridQLNV.DataSource = dsnv;
+            //db.GetTable<DSNV>().Refresh(RefreshMode.OverwriteCurrentValues); // Làm mới lại dữ liệu
+            //db.Refresh(RefreshMode.OverwriteCurrentValues, dsnv); // Xóa cache đối tượng DSNV để làm mới lại dữ liệu
+            db.Refresh(RefreshMode.OverwriteCurrentValues, dsnv);
         }
 
         public void load_Phong()
@@ -87,6 +90,11 @@ namespace BT_LINQ
                 gt = true;
             else
                 gt = false;
+            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoTen.Text) || string.IsNullOrEmpty(tbxHSL.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
 
             DSNV nv = new DSNV();
             nv.MaNV = tbxMaNV.Text.Trim();
@@ -99,6 +107,7 @@ namespace BT_LINQ
 
             db.DSNVs.InsertOnSubmit(nv);
             db.SubmitChanges();
+            MessageBox.Show("Thêm thành công!");
 
             load_Grid();
         }
@@ -114,6 +123,68 @@ namespace BT_LINQ
                      where tim.HoTen.Contains(tbxHoTen.Text.Trim())
                      select tim;
             gridQLNV.DataSource = kq.ToList();
+        }
+
+        private void btXoa_Click(object sender, EventArgs e)
+        {
+            string manv= tbxMaNV.Text.Trim();
+            if (!checkMaNV(manv))
+            {
+                MessageBox.Show("Mã nhân viên không tồn tại!");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                DSNV nv = db.DSNVs.Where(p => p.MaNV.Equals(manv)).SingleOrDefault();
+                db.DSNVs.DeleteOnSubmit(nv);
+                db.SubmitChanges();
+                MessageBox.Show("Xoá thành công!");
+                load_Grid();
+            }
+            else
+                MessageBox.Show("Xoá thất bại!");
+
+            
+        }
+
+        private void btCapNhat_Click(object sender, EventArgs e)
+        {
+            string manv = tbxMaNV.Text.Trim();
+            if (!checkMaNV(manv))
+            {
+                MessageBox.Show("Mã nhân viên không tồn tại!");
+                return;
+            }
+
+            Boolean gt;
+            if (rdbNam.Checked == true)
+                gt = true;
+            else
+                gt = false;
+            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoTen.Text) || string.IsNullOrEmpty(tbxHSL.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            DSNV nv = db.DSNVs.SingleOrDefault(p => p.MaNV == manv);
+            if (nv != null)
+            {
+                nv.HoTen = tbxHoTen.Text.Trim();
+                nv.NgaySinh = dtpNgaySinh.Value;
+                nv.GioiTinh = gt;
+                nv.MaPhong = cbbPhong.SelectedValue.ToString();
+                nv.HeSoLuong = Convert.ToDouble(tbxHSL.Text.Trim());
+                nv.MaChucVu = cbbChucVu.SelectedValue.ToString();
+
+                db.SubmitChanges();
+                MessageBox.Show("Cập nhật thành công!");
+                load_Grid();
+
+            }
         }
     }
 }

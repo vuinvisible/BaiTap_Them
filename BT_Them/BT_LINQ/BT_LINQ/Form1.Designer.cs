@@ -40,8 +40,8 @@
             this.lbChVu = new System.Windows.Forms.Label();
             this.lbHSL = new System.Windows.Forms.Label();
             this.grbGioiTinh = new System.Windows.Forms.GroupBox();
-            this.rdbNam = new System.Windows.Forms.RadioButton();
             this.rdbNu = new System.Windows.Forms.RadioButton();
+            this.rdbNam = new System.Windows.Forms.RadioButton();
             this.tbxMaNV = new System.Windows.Forms.TextBox();
             this.tbxHoTen = new System.Windows.Forms.TextBox();
             this.tbxHSL = new System.Windows.Forms.TextBox();
@@ -70,6 +70,7 @@
             this.btXoa.TabIndex = 1;
             this.btXoa.Text = "Xóa";
             this.btXoa.UseVisualStyleBackColor = true;
+            this.btXoa.Click += new System.EventHandler(this.btXoa_Click);
             // 
             // gridQLNV
             // 
@@ -97,6 +98,7 @@
             this.btCapNhat.TabIndex = 4;
             this.btCapNhat.Text = "Cập nhật";
             this.btCapNhat.UseVisualStyleBackColor = true;
+            this.btCapNhat.Click += new System.EventHandler(this.btCapNhat_Click);
             // 
             // lbMaNV
             // 
@@ -163,6 +165,17 @@
             this.grbGioiTinh.TabStop = false;
             this.grbGioiTinh.Text = "Giới tính";
             // 
+            // rdbNu
+            // 
+            this.rdbNu.AutoSize = true;
+            this.rdbNu.Location = new System.Drawing.Point(156, 31);
+            this.rdbNu.Name = "rdbNu";
+            this.rdbNu.Size = new System.Drawing.Size(39, 17);
+            this.rdbNu.TabIndex = 1;
+            this.rdbNu.TabStop = true;
+            this.rdbNu.Text = "Nữ";
+            this.rdbNu.UseVisualStyleBackColor = true;
+            // 
             // rdbNam
             // 
             this.rdbNam.AutoSize = true;
@@ -174,17 +187,6 @@
             this.rdbNam.TabStop = true;
             this.rdbNam.Text = "Nam";
             this.rdbNam.UseVisualStyleBackColor = true;
-            // 
-            // rdbNu
-            // 
-            this.rdbNu.AutoSize = true;
-            this.rdbNu.Location = new System.Drawing.Point(156, 31);
-            this.rdbNu.Name = "rdbNu";
-            this.rdbNu.Size = new System.Drawing.Size(39, 17);
-            this.rdbNu.TabIndex = 1;
-            this.rdbNu.TabStop = true;
-            this.rdbNu.Text = "Nữ";
-            this.rdbNu.UseVisualStyleBackColor = true;
             // 
             // tbxMaNV
             // 
