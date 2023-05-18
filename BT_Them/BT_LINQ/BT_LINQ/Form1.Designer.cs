@@ -79,6 +79,7 @@
             this.gridQLNV.Name = "gridQLNV";
             this.gridQLNV.Size = new System.Drawing.Size(776, 212);
             this.gridQLNV.TabIndex = 2;
+            this.gridQLNV.SelectionChanged += new System.EventHandler(this.gridQLNV_SelectionChanged);
             // 
             // btTim
             // 

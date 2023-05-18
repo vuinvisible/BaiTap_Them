@@ -32,9 +32,8 @@ namespace BT_LINQ
         {
             Table<DSNV> dsnv = db.GetTable<DSNV>();
             gridQLNV.DataSource = dsnv;
-            //db.GetTable<DSNV>().Refresh(RefreshMode.OverwriteCurrentValues); // Làm mới lại dữ liệu
-            //db.Refresh(RefreshMode.OverwriteCurrentValues, dsnv); // Xóa cache đối tượng DSNV để làm mới lại dữ liệu
             db.Refresh(RefreshMode.OverwriteCurrentValues, dsnv);
+            //gridQLNV.SelectionChanged += gridQLNV_SelectionChanged;
         }
 
         public void load_Phong()
@@ -146,8 +145,6 @@ namespace BT_LINQ
             }
             else
                 MessageBox.Show("Xoá thất bại!");
-
-            
         }
 
         private void btCapNhat_Click(object sender, EventArgs e)
@@ -183,7 +180,24 @@ namespace BT_LINQ
                 db.SubmitChanges();
                 MessageBox.Show("Cập nhật thành công!");
                 load_Grid();
+            }
+        }
 
+        private void gridQLNV_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridQLNV.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = gridQLNV.SelectedRows[0];
+                tbxMaNV.Text = row.Cells["MaNV"].Value.ToString();
+                tbxHoTen.Text = row.Cells["HoTen"].Value.ToString();
+                dtpNgaySinh.Value = (DateTime)row.Cells["NgaySinh"].Value;
+                if ((bool)row.Cells["GioiTinh"].Value == true)
+                    rdbNam.Checked = true;
+                else
+                    rdbNu.Checked = true;
+                cbbPhong.SelectedValue = row.Cells["MaPhong"].Value.ToString();
+                tbxHSL.Text = row.Cells["HeSoLuong"].Value.ToString();
+                cbbChucVu.SelectedValue = row.Cells["MaChucVu"].Value.ToString();
             }
         }
     }
