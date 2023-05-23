@@ -31,8 +31,8 @@ namespace BT_LINQ
         public void load_Grid()
         {
             Table<DSNV> dsnv = db.GetTable<DSNV>();
+            db.Refresh(RefreshMode.OverwriteCurrentValues, db.DSNVs);
             gridQLNV.DataSource = dsnv;
-            db.Refresh(RefreshMode.OverwriteCurrentValues, dsnv);
             //gridQLNV.SelectionChanged += gridQLNV_SelectionChanged;
         }
 
@@ -107,7 +107,6 @@ namespace BT_LINQ
             db.DSNVs.InsertOnSubmit(nv);
             db.SubmitChanges();
             MessageBox.Show("Thêm thành công!");
-
             load_Grid();
         }
 
