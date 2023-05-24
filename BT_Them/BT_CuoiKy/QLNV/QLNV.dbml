@@ -4,7 +4,7 @@
     <Type Name="CHUCVU">
       <Column Name="MaChucVu" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="TenChucVu" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="PhuCap" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PhuCapCV" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="CHUCVU_DSNV" Member="DSNVs" ThisKey="MaChucVu" OtherKey="MaChucVu" Type="DSNV" />
     </Type>
   </Table>
@@ -18,6 +18,7 @@
       <Column Name="MaPhong" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="MaChucVu" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="HeSoLuong" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="LuongCoBan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SoDienThoai" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="DiaChi" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="CHUCVU_DSNV" Member="CHUCVU" ThisKey="MaChucVu" OtherKey="MaChucVu" Type="CHUCVU" IsForeignKey="true" />

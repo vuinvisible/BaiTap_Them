@@ -106,7 +106,7 @@ namespace QLNV
 		
 		private string _TenChucVu;
 		
-		private int _PhuCap;
+		private int _PhuCapCV;
 		
 		private EntitySet<DSNV> _DSNVs;
 		
@@ -118,8 +118,8 @@ namespace QLNV
     partial void OnMaChucVuChanged();
     partial void OnTenChucVuChanging(string value);
     partial void OnTenChucVuChanged();
-    partial void OnPhuCapChanging(int value);
-    partial void OnPhuCapChanged();
+    partial void OnPhuCapCVChanging(int value);
+    partial void OnPhuCapCVChanged();
     #endregion
 		
 		public CHUCVU()
@@ -168,22 +168,22 @@ namespace QLNV
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhuCap", DbType="Int NOT NULL")]
-		public int PhuCap
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhuCapCV", DbType="Int NOT NULL")]
+		public int PhuCapCV
 		{
 			get
 			{
-				return this._PhuCap;
+				return this._PhuCapCV;
 			}
 			set
 			{
-				if ((this._PhuCap != value))
+				if ((this._PhuCapCV != value))
 				{
-					this.OnPhuCapChanging(value);
+					this.OnPhuCapCVChanging(value);
 					this.SendPropertyChanging();
-					this._PhuCap = value;
-					this.SendPropertyChanged("PhuCap");
-					this.OnPhuCapChanged();
+					this._PhuCapCV = value;
+					this.SendPropertyChanged("PhuCapCV");
+					this.OnPhuCapCVChanged();
 				}
 			}
 		}
@@ -256,6 +256,8 @@ namespace QLNV
 		
 		private double _HeSoLuong;
 		
+		private int _LuongCoBan;
+		
 		private string _SoDienThoai;
 		
 		private string _DiaChi;
@@ -284,6 +286,8 @@ namespace QLNV
     partial void OnMaChucVuChanged();
     partial void OnHeSoLuongChanging(double value);
     partial void OnHeSoLuongChanged();
+    partial void OnLuongCoBanChanging(int value);
+    partial void OnLuongCoBanChanged();
     partial void OnSoDienThoaiChanging(string value);
     partial void OnSoDienThoaiChanged();
     partial void OnDiaChiChanging(string value);
@@ -461,6 +465,26 @@ namespace QLNV
 					this._HeSoLuong = value;
 					this.SendPropertyChanged("HeSoLuong");
 					this.OnHeSoLuongChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LuongCoBan", DbType="Int NOT NULL")]
+		public int LuongCoBan
+		{
+			get
+			{
+				return this._LuongCoBan;
+			}
+			set
+			{
+				if ((this._LuongCoBan != value))
+				{
+					this.OnLuongCoBanChanging(value);
+					this.SendPropertyChanging();
+					this._LuongCoBan = value;
+					this.SendPropertyChanged("LuongCoBan");
+					this.OnLuongCoBanChanged();
 				}
 			}
 		}

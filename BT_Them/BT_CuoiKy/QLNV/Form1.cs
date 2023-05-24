@@ -68,6 +68,7 @@ namespace QLNV
             if (gridQLNV.SelectedRows.Count > 0)
             {
                 DataGridViewRow Row = gridQLNV.SelectedRows[0];
+               
                 tbxMaNV.Text = Row.Cells["MaNV"].Value.ToString();
                 tbxHoDem.Text = Row.Cells["HoDem"].Value.ToString();
                 tbxTen.Text = Row.Cells["Ten"].Value.ToString();
@@ -79,6 +80,7 @@ namespace QLNV
                 cbbPhong.SelectedValue = Row.Cells["MaPhong"].Value;
                 cbbChucVu.SelectedValue = Row.Cells["MaChucVu"].Value;
                 tbxHSL.Text = Row.Cells["HeSoLuong"].Value.ToString();
+                tbxLCB.Text = Row.Cells["LuongCoBan"].Value.ToString();
                 tbxSDT.Text = Row.Cells["SoDienThoai"].Value.ToString();
                 tbxDiaChi.Text = Row.Cells["DiaChi"].Value.ToString();
             }
@@ -98,7 +100,7 @@ namespace QLNV
             else
                 gt = false;
 
-            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoDem.Text) || string.IsNullOrEmpty(tbxTen.Text) || string.IsNullOrEmpty(tbxHSL.Text))
+            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoDem.Text) || string.IsNullOrEmpty(tbxTen.Text) || string.IsNullOrEmpty(tbxHSL.Text) || string.IsNullOrEmpty(tbxLCB.Text))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
@@ -113,6 +115,7 @@ namespace QLNV
             nv.MaPhong = cbbPhong.SelectedValue.ToString();
             nv.MaChucVu = cbbChucVu.SelectedValue.ToString();
             nv.HeSoLuong = Convert.ToDouble(tbxHSL.Text);
+            nv.LuongCoBan = Convert.ToInt16(tbxLCB.Text);
             nv.SoDienThoai = tbxSDT.Text.Trim();
             nv.DiaChi = tbxDiaChi.Text.Trim();
 
@@ -176,6 +179,7 @@ namespace QLNV
                 nv.MaPhong = cbbPhong.SelectedValue.ToString();
                 nv.MaChucVu = cbbChucVu.SelectedValue.ToString();
                 nv.HeSoLuong = Convert.ToDouble(tbxHSL.Text);
+                nv.LuongCoBan = Convert.ToInt16(tbxLCB.Text);
                 nv.SoDienThoai = tbxSDT.Text.Trim();
                 nv.DiaChi = tbxDiaChi.Text.Trim();
 
@@ -199,6 +203,11 @@ namespace QLNV
                      where tim.Ten.Contains(tbxTen.Text.Trim())
                      select tim;
             gridQLNV.DataSource = kq.ToList();
+        }
+
+        private void btLuong_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }
