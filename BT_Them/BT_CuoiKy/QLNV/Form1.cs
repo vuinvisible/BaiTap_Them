@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Linq;
+using System.Data.SqlClient;
 
 namespace QLNV
 {
@@ -18,7 +19,9 @@ namespace QLNV
             InitializeComponent();
         }
 
-        QLNVDataContext db = new QLNVDataContext();
+        string connStr = "Server = LAB1-MAY11\\SQLEXPRESS; Database = QLNV1; Trusted_Connection = true";
+        DataSet ds = new DataSet();
+        SqlDataAdapter da;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -29,33 +32,46 @@ namespace QLNV
 
         public void load_Grid()
         {
-            Table<DSNV> dsnv = db.GetTable<DSNV>();
-            db.Refresh(RefreshMode.OverwriteCurrentValues, db.DSNVs);
-            gridQLNV.DataSource = dsnv;
+            DataTable dt = new DataTable();
+            string sqlDSNV = "select * from DSNV";
+            da = new SqlDataAdapter(sqlDSNV, connStr);
+            da.Fill(dt);
+            gridQLNV.DataSource = dt;
         }
 
         public void load_Phong()
         {
-            var phong = from ph in db.PHONGBANs
-                        select new { TenPhong = ph.TenPhong, MaPhong = ph.MaPhong };
-            cbbPhong.DataSource = phong.ToList();
+            string sqlPB = "select * from PHONGBAN";
+            da = new SqlDataAdapter(sqlPB, connStr);
+            da.Fill(ds, "PHONGBAN");
+            cbbPhong.DataSource = ds.Tables["PHONGBAN"];
             cbbPhong.DisplayMember = "TenPhong";
             cbbPhong.ValueMember = "MaPhong";
         }
 
         public void load_ChucVu()
         {
-            var chucvu = from cv in db.CHUCVUs
-                         select new { TenChucVu = cv.TenChucVu, MaChucVu = cv.MaChucVu };
-            cbbChucVu.DataSource = chucvu.ToList();
+            string sqlCV = "select * from CHUCVU";
+            da = new SqlDataAdapter(sqlCV, connStr);
+            da.Fill(ds, "CHUCVU");
+            cbbChucVu.DataSource = ds.Tables["CHUCVU"];
             cbbChucVu.DisplayMember = "TenChucVu";
             cbbChucVu.ValueMember = "MaChucVu";
         }
 
         public bool checkMaNV(string manv)
         {
-            //trả về true nếu tìm thấy bất kỳ bản ghi DSNV nào có MaNV giống với giá trị được truyền vào
-            return db.DSNVs.Any(ma => ma.MaNV == manv);
+            using (SqlConnection conn1 = new SqlConnection(connStr))
+            {
+                string sqlCheck = "select * from DSNV where MaNV = @manv";
+                using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn1))
+                {
+                    cmdCheck.Parameters.AddWithValue("@manv", manv.Trim());
+                    conn1.Open();
+                    SqlDataReader dr = cmdCheck.ExecuteReader();
+                    return dr.HasRows;
+                }
+            }
         }
 
         private void btThoat_Click(object sender, EventArgs e)
@@ -94,37 +110,56 @@ namespace QLNV
                 return;
             }
 
-            Boolean gt;
-            if (rdbNam.Checked == true)
-                gt = true;
-            else
-                gt = false;
-
-            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoDem.Text) || string.IsNullOrEmpty(tbxTen.Text) || string.IsNullOrEmpty(tbxHSL.Text) || string.IsNullOrEmpty(tbxLCB.Text))
+            using (SqlConnection connStr1 = new SqlConnection(connStr))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
-                return;
+                string sql = "insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLuong, LuongCoBan, SoDienThoai, DiaChi) " +
+                             "values (@manv, @hd, @ten, @ngs, @gt, @maphong, @mcv, @hsl, @lcb, @sdt, @dc)";
+                using (SqlCommand cmd = new SqlCommand(sql, connStr1))
+                {
+                    Boolean gt;
+                    if (rdbNam.Checked == true)
+                        gt = true;
+                    else
+                        gt = false;
+
+                    if (string.IsNullOrEmpty(tbxMaNV.Text.Trim()) || string.IsNullOrEmpty(tbxHoDem.Text.Trim()) || string.IsNullOrEmpty(tbxTen.Text.Trim()) || string.IsNullOrEmpty(tbxHSL.Text.Trim()) || string.IsNullOrEmpty(tbxLCB.Text.Trim()) || string.IsNullOrEmpty(tbxSDT.Text.Trim()) || string.IsNullOrEmpty(tbxDiaChi.Text.Trim()))
+                    {
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                        return;
+                    }
+
+                    double hsl;
+                    if (!double.TryParse(tbxHSL.Text.Trim(), out hsl))
+                    {
+                        MessageBox.Show("Hệ số lương phải là một số!");
+                        return;
+                    }
+
+                    cmd.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+                    cmd.Parameters.AddWithValue("@hd", tbxHoDem.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ten", tbxTen.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
+                    cmd.Parameters.AddWithValue("@gt", gt);
+                    cmd.Parameters.AddWithValue("@maphong", cbbPhong.SelectedValue.ToString());
+                    cmd.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
+                    cmd.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbxHSL.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@lcb", Convert.ToDouble(tbxLCB.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@sdt", tbxSDT.Text.Trim());
+                    cmd.Parameters.AddWithValue("@dc", tbxDiaChi.Text.Trim());
+
+                    connStr1.Open();
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Thêm mới nhân viên thành công!");
+                        load_Grid();
+                    }
+                    else
+                        MessageBox.Show("Thêm mới nhân viên thất bại!");
+                }
             }
 
-            DSNV nv = new DSNV();
-            nv.MaNV = tbxMaNV.Text.Trim();
-            nv.HoDem = tbxHoDem.Text.Trim();
-            nv.Ten = tbxTen.Text.Trim();
-            nv.NgaySinh = dtpNgaySinh.Value;
-            nv.GioiTinh = gt;
-            nv.MaPhong = cbbPhong.SelectedValue.ToString();
-            nv.MaChucVu = cbbChucVu.SelectedValue.ToString();
-            nv.HeSoLuong = Convert.ToDouble(tbxHSL.Text);
-            nv.LuongCoBan = Convert.ToInt16(tbxLCB.Text);
-            nv.SoDienThoai = tbxSDT.Text.Trim();
-            nv.DiaChi = tbxDiaChi.Text.Trim();
-
-            db.DSNVs.InsertOnSubmit(nv);
-            db.SubmitChanges();
-
-            load_Grid();
-
-            MessageBox.Show("Thêm nhân viên mới thành công!");
         }
 
         private void btXoa_Click(object sender, EventArgs e)
@@ -135,18 +170,30 @@ namespace QLNV
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            using (SqlConnection connStr3 = new SqlConnection(connStr))
             {
+                string sqlDel = "delete from DSNV where MaNV = @manv";
+                using (SqlCommand cmdDel = new SqlCommand(sqlDel, connStr3))
+                {
 
-                DSNV nv = db.DSNVs.Where(p => p.MaNV.Equals(tbxMaNV.Text.Trim())).SingleOrDefault();
-                db.DSNVs.DeleteOnSubmit(nv);
-                db.SubmitChanges();
-                load_Grid();
-                MessageBox.Show("Xoá nhân viên thành công!");
+                    cmdDel.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+
+                    DialogResult result = MessageBox.Show("Bạn có muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        connStr3.Open();
+                        int result1 = cmdDel.ExecuteNonQuery();
+
+                        if (result1 > 0)
+                        {
+                            MessageBox.Show("Xóa nhân viên thành công!");
+                            load_Grid();
+                        }
+                        else
+                            MessageBox.Show("Xóa nhân viên thất bại!");
+                    }
+                }
             }
-            else
-                MessageBox.Show("Xoá nhân viên thất bại!");
         }
 
         private void btCapNhat_Click(object sender, EventArgs e)
@@ -157,38 +204,57 @@ namespace QLNV
                 return;
             }
 
-            Boolean gt;
-            if (rdbNam.Checked == true)
-                gt = true;
-            else
-                gt = false;
-
-            if (string.IsNullOrEmpty(tbxMaNV.Text) || string.IsNullOrEmpty(tbxHoDem.Text) || string.IsNullOrEmpty(tbxTen.Text) || string.IsNullOrEmpty(tbxHSL.Text))
+            using (SqlConnection connStr2 = new SqlConnection(connStr))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
-                return;
-            }
+                string sqlUP = "update DSNV set HoDem = @hd, Ten = @ten, NgaySinh = @ngs, GioiTinh = @gt, MaPhong = @maphong, MaChucVu = @mcv, HeSoLuong = @hsl, LuongCoBan = @lcb, SoDienThoai = @sdt, DiaChi = @dc " +
+                               "where MaNV = @manv";
+                using (SqlCommand cmdUP = new SqlCommand(sqlUP, connStr2))
+                {
 
-            DSNV nv = db.DSNVs.Where(p => p.MaNV.Equals(tbxMaNV.Text.Trim())).SingleOrDefault();
-            if (nv != null)
-            {
-                nv.HoDem = tbxHoDem.Text.Trim();
-                nv.Ten = tbxTen.Text.Trim();
-                nv.NgaySinh = dtpNgaySinh.Value;
-                nv.GioiTinh = gt;
-                nv.MaPhong = cbbPhong.SelectedValue.ToString();
-                nv.MaChucVu = cbbChucVu.SelectedValue.ToString();
-                nv.HeSoLuong = Convert.ToDouble(tbxHSL.Text);
-                nv.LuongCoBan = Convert.ToInt16(tbxLCB.Text);
-                nv.SoDienThoai = tbxSDT.Text.Trim();
-                nv.DiaChi = tbxDiaChi.Text.Trim();
+                    Boolean gt;
+                    if (rdbNam.Checked == true)
+                        gt = true;
+                    else
+                        gt = false;
 
-                db.SubmitChanges();
-                load_Grid();
-                MessageBox.Show("Cập nhật thông tin nhân viên thành công!");
+                    if (string.IsNullOrEmpty(tbxMaNV.Text.Trim()) || string.IsNullOrEmpty(tbxHoDem.Text.Trim()) || string.IsNullOrEmpty(tbxTen.Text.Trim()) || string.IsNullOrEmpty(tbxHSL.Text.Trim()) || string.IsNullOrEmpty(tbxLCB.Text.Trim()) || string.IsNullOrEmpty(tbxSDT.Text.Trim()) || string.IsNullOrEmpty(tbxDiaChi.Text.Trim()))
+                    {
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                        return;
+                    }
+
+                    double hsl;
+                    if (!double.TryParse(tbxHSL.Text.Trim(), out hsl))
+                    {
+                        MessageBox.Show("Hệ số lương phải là một số!");
+                        return;
+                    }
+
+                    cmdUP.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@hd", tbxHoDem.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@ten", tbxTen.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
+                    cmdUP.Parameters.AddWithValue("@gt", gt);
+                    cmdUP.Parameters.AddWithValue("@maphong", cbbPhong.SelectedValue.ToString());
+                    cmdUP.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
+                    cmdUP.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbxHSL.Text.Trim()));
+                    cmdUP.Parameters.AddWithValue("@lcb", Convert.ToDouble(tbxLCB.Text.Trim()));
+                    cmdUP.Parameters.AddWithValue("@sdt", tbxSDT.Text.Trim());
+                    cmdUP.Parameters.AddWithValue("@dc", tbxDiaChi.Text.Trim());
+
+                    connStr2.Open();
+                    int result2 = cmdUP.ExecuteNonQuery();
+
+                    if (result2 > 0)
+                    {
+                        MessageBox.Show("Cập nhật thông tin thành công!");
+                        load_Grid();
+                    }  
+                    else
+                        MessageBox.Show("Cập nhật thông tin thất bại!");
+                }
+
             }
-            else
-                MessageBox.Show("Cập nhật thông tin nhân viên thất bại!");
         }
 
         private void btTim_Click(object sender, EventArgs e)
@@ -199,15 +265,58 @@ namespace QLNV
                 return;
             }
 
-            var kq = from tim in db.DSNVs
-                     where tim.Ten.Contains(tbxTen.Text.Trim())
-                     select tim;
-            gridQLNV.DataSource = kq.ToList();
+            string sqlTim = "select * from DSNV where HoTen like N'%" + tbxTen.Text + "%'";
+            DataTable dt = new DataTable();
+            da = new SqlDataAdapter(sqlTim, connStr);
+            da.Fill(dt);
+            gridQLNV.DataSource = dt;
         }
 
         private void btLuong_Click(object sender, EventArgs e)
         {
-           
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string sql = "SELECT DSNV.MaNV, DSNV.Ten, DSNV.LuongCoBan, DSNV.HeSoLuong, CHUCVU.PhuCapCV, " +
+                             "(DSNV.LuongCoBan * DSNV.HeSoLuong + CHUCVU.PhuCapCV) AS LuongThucNhan " +
+                             "FROM DSNV " +
+                             "INNER JOIN CHUCVU ON DSNV.MaChucVu = CHUCVU.MaChucVu " +
+                             "WHERE DSNV.MaNV = @manv";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    if (string.IsNullOrEmpty(tbxMaNV.Text.Trim()))
+                    {
+                        MessageBox.Show("Vui lòng nhập mã nhân viên để tính lương!");
+                        return;
+                    }
+
+                    double luongThucNhan = 0;
+                    if (double.TryParse(tbxLCB.Text.Trim(), out double luongCoBan) && double.TryParse(tbxHSL.Text.Trim(), out double heSoLuong))
+                    {
+                        cmd.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+                        conn.Open();
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                luongThucNhan = Convert.ToDouble(dr["LuongThucNhan"]);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không tìm thấy thông tin nhân viên với mã " + tbxMaNV.Text);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lương cơ bản và hệ số lương phải là các số!");
+                        return;
+                    }
+
+                    MessageBox.Show("Lương thực nhận của nhân viên có mã " + tbxMaNV.Text + " là " + luongThucNhan.ToString());
+                }
+            }
         }
     }
 }
