@@ -59,6 +59,8 @@
             this.btTim = new System.Windows.Forms.Button();
             this.btThoat = new System.Windows.Forms.Button();
             this.btLuong = new System.Windows.Forms.Button();
+            this.btLamMoi = new System.Windows.Forms.Button();
+            this.btSapXep = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridQLNV)).BeginInit();
             this.grbTTNV.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +70,7 @@
             this.gridQLNV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridQLNV.Location = new System.Drawing.Point(4, 12);
             this.gridQLNV.Name = "gridQLNV";
+            this.gridQLNV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.gridQLNV.Size = new System.Drawing.Size(523, 493);
             this.gridQLNV.TabIndex = 0;
             this.gridQLNV.SelectionChanged += new System.EventHandler(this.gridQLNV_SelectionChanged);
@@ -364,7 +367,7 @@
             // 
             // btThoat
             // 
-            this.btThoat.Location = new System.Drawing.Point(884, 446);
+            this.btThoat.Location = new System.Drawing.Point(947, 446);
             this.btThoat.Name = "btThoat";
             this.btThoat.Size = new System.Drawing.Size(75, 23);
             this.btThoat.TabIndex = 22;
@@ -374,7 +377,7 @@
             // 
             // btLuong
             // 
-            this.btLuong.Location = new System.Drawing.Point(620, 446);
+            this.btLuong.Location = new System.Drawing.Point(545, 446);
             this.btLuong.Name = "btLuong";
             this.btLuong.Size = new System.Drawing.Size(75, 23);
             this.btLuong.TabIndex = 23;
@@ -382,11 +385,33 @@
             this.btLuong.UseVisualStyleBackColor = true;
             this.btLuong.Click += new System.EventHandler(this.btLuong_Click);
             // 
+            // btLamMoi
+            // 
+            this.btLamMoi.Location = new System.Drawing.Point(681, 446);
+            this.btLamMoi.Name = "btLamMoi";
+            this.btLamMoi.Size = new System.Drawing.Size(75, 23);
+            this.btLamMoi.TabIndex = 24;
+            this.btLamMoi.Text = "Làm mới";
+            this.btLamMoi.UseVisualStyleBackColor = true;
+            this.btLamMoi.Click += new System.EventHandler(this.btLamMoi_Click);
+            // 
+            // btSapXep
+            // 
+            this.btSapXep.Location = new System.Drawing.Point(819, 446);
+            this.btSapXep.Name = "btSapXep";
+            this.btSapXep.Size = new System.Drawing.Size(75, 23);
+            this.btSapXep.TabIndex = 25;
+            this.btSapXep.Text = "Sắp xếp";
+            this.btSapXep.UseVisualStyleBackColor = true;
+            this.btSapXep.Click += new System.EventHandler(this.btSapXep_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 517);
+            this.Controls.Add(this.btSapXep);
+            this.Controls.Add(this.btLamMoi);
             this.Controls.Add(this.btLuong);
             this.Controls.Add(this.btThoat);
             this.Controls.Add(this.btTim);
@@ -438,6 +463,8 @@
         private System.Windows.Forms.TextBox tbxLCB;
         private System.Windows.Forms.Label lbLCB;
         private System.Windows.Forms.Button btLuong;
+        private System.Windows.Forms.Button btLamMoi;
+        private System.Windows.Forms.Button btSapXep;
     }
 }
 
