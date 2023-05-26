@@ -23,18 +23,18 @@ namespace QLNV
 
         private void btDangNhap_Click(object sender, EventArgs e)
         {
-            using(SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string sqlDN = "select * form USERS where TenDangNhap = @tdn and MatKhau = @mk";
-                using(SqlCommand cmdDN = new SqlCommand(sqlDN, conn))
+                string sqlDN = "select * from USERS where TenDangNhap = @tdn and MatKhau = @mk";
+                using (SqlCommand cmdDN = new SqlCommand(sqlDN, conn))
                 {
                     cmdDN.Parameters.AddWithValue("@tdn", tbxTenDangNhap.Text.Trim());
                     cmdDN.Parameters.AddWithValue("@mk", tbxMatKhau.Text.Trim());
 
                     conn.Open();
-                    int result = cmdDN.ExecuteNonQuery();
+                    SqlDataReader reader = cmdDN.ExecuteReader();
 
-                    if (result == 0)
+                    if (!reader.HasRows)
                         MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!");
                     else
                     {
@@ -46,6 +46,8 @@ namespace QLNV
                         FormQLNV f = new FormQLNV();
                         f.Show();
                     }
+
+                    reader.Close();
                 }
             }
         }

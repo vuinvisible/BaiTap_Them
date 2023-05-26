@@ -16,7 +16,7 @@ namespace QLNV
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormQLNV());
+            Application.Run(new FormDangNhap());
         }
     }
 }

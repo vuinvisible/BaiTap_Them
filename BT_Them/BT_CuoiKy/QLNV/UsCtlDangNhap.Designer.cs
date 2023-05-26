@@ -34,8 +34,6 @@
             this.tbxTenDangNhap = new System.Windows.Forms.TextBox();
             this.tbxMatKhau = new System.Windows.Forms.TextBox();
             this.btDangNhap = new System.Windows.Forms.Button();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // lbDangNhap
@@ -93,12 +91,7 @@
             this.btDangNhap.UseVisualStyleBackColor = true;
             this.btDangNhap.Click += new System.EventHandler(this.btDangNhap_Click);
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // FormDangNhap
+            // UsCtlDangNhap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -108,9 +101,8 @@
             this.Controls.Add(this.lbMatKhau);
             this.Controls.Add(this.lbTenDangNhap);
             this.Controls.Add(this.lbDangNhap);
-            this.Name = "FormDangNhap";
+            this.Name = "UsCtlDangNhap";
             this.Size = new System.Drawing.Size(379, 463);
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,6 +116,5 @@
         private System.Windows.Forms.TextBox tbxTenDangNhap;
         private System.Windows.Forms.TextBox tbxMatKhau;
         private System.Windows.Forms.Button btDangNhap;
-        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
