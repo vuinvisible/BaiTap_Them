@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Linq;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace QLNV
 {
-    public partial class Form1 : Form
+    public partial class FormQLNV : Form
     {
-        public Form1()
+        public FormQLNV()
         {
             InitializeComponent();
         }
@@ -94,7 +95,7 @@ namespace QLNV
             }
         }
 
-        public bool checkTT() //Kiểm tra thông tin nhập vào co đủ hay không
+        public bool checkTT() //Kiểm tra thông tin nhập vào có đủ hay không
         {
             //Nếu 1 trong các ô text box rỗng thì trả về false
             if (string.IsNullOrEmpty(tbxMaNV.Text.Trim()) || string.IsNullOrEmpty(tbxHoDem.Text.Trim()) || string.IsNullOrEmpty(tbxTen.Text.Trim()) || string.IsNullOrEmpty(tbxHSL.Text.Trim()) || string.IsNullOrEmpty(tbxLCB.Text.Trim()) || string.IsNullOrEmpty(tbxSDT.Text.Trim()) || string.IsNullOrEmpty(tbxDiaChi.Text.Trim()))
@@ -149,9 +150,9 @@ namespace QLNV
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string sql = "insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLuong, LuongCoBan, SoDienThoai, DiaChi) " +
+                string sqlAdd = "insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLuong, LuongCoBan, SoDienThoai, DiaChi) " +
                              "values (@manv, @hd, @ten, @ngs, @gt, @maphong, @mcv, @hsl, @lcb, @sdt, @dc)";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (SqlCommand cmdAdd = new SqlCommand(sqlAdd, conn))
                 {
                     Boolean gt;
                     if (rdbNam.Checked == true)
@@ -171,20 +172,20 @@ namespace QLNV
                         return;
                     }
 
-                    cmd.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
-                    cmd.Parameters.AddWithValue("@hd", tbxHoDem.Text.Trim());
-                    cmd.Parameters.AddWithValue("@ten", tbxTen.Text.Trim());
-                    cmd.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
-                    cmd.Parameters.AddWithValue("@gt", gt);
-                    cmd.Parameters.AddWithValue("@maphong", cbbPhong.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
-                    cmd.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbxHSL.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@lcb", Convert.ToDouble(tbxLCB.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@sdt", tbxSDT.Text.Trim());
-                    cmd.Parameters.AddWithValue("@dc", tbxDiaChi.Text.Trim());
+                    cmdAdd.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+                    cmdAdd.Parameters.AddWithValue("@hd", tbxHoDem.Text.Trim());
+                    cmdAdd.Parameters.AddWithValue("@ten", tbxTen.Text.Trim());
+                    cmdAdd.Parameters.AddWithValue("@ngs", dtpNgaySinh.Value);
+                    cmdAdd.Parameters.AddWithValue("@gt", gt);
+                    cmdAdd.Parameters.AddWithValue("@maphong", cbbPhong.SelectedValue.ToString());
+                    cmdAdd.Parameters.AddWithValue("@mcv", cbbChucVu.SelectedValue.ToString());
+                    cmdAdd.Parameters.AddWithValue("@hsl", Convert.ToDouble(tbxHSL.Text.Trim()));
+                    cmdAdd.Parameters.AddWithValue("@lcb", Convert.ToDouble(tbxLCB.Text.Trim()));
+                    cmdAdd.Parameters.AddWithValue("@sdt", tbxSDT.Text.Trim());
+                    cmdAdd.Parameters.AddWithValue("@dc", tbxDiaChi.Text.Trim());
 
                     conn.Open();
-                    int result = cmd.ExecuteNonQuery();
+                    int result = cmdAdd.ExecuteNonQuery();
 
                     if (result > 0)
                     {
@@ -381,6 +382,39 @@ namespace QLNV
             da = new SqlDataAdapter(sqlSX, connStr);
             da.Fill(dt);
             gridQLNV.DataSource = dt;
+        }
+
+        private void menuSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sv = new SaveFileDialog();
+            sv.Filter = "Text File|*.txt";
+            sv.Title = "Save as";
+            try
+            {
+                if(sv.ShowDialog() == DialogResult.OK)
+                {
+                    using(StreamWriter sw = new StreamWriter(sv.FileName))
+                    {
+                        foreach(DataGridViewRow row in gridQLNV.Rows)
+                        {
+                            string st = "";
+                            for(int i = 0; i < row.Cells.Count; i++)
+                            {
+                                if (row.Cells[i] != null && row.Cells[i].Value != null) //Nếu ô tồn tại và có giá trị thì sẽ được thêm vào chuỗi.
+                                {
+                                    st += row.Cells[i].Value.ToString() + ", ";
+                                }
+                            }
+                            sw.WriteLine(st);
+                        }
+                    }
+                    MessageBox.Show("Lưu thông tin nhân viên thành công!");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Lưu thông tin nhân viên thất bại! Lỗi: " + ex.Message);
+            }
         }
 
     }

@@ -26,6 +26,12 @@ create table DSNV(
 	DiaChi nvarchar(100) not null
 )
 
+create table USERS(
+	ID int primary key IDENTITY(1,1),
+	TenDangNhap varchar(50) not null,
+	MatKhau varchar(100) not null
+)
+
 drop table DSNV
 
 alter table DSNV add constraint fk_MaPhong foreign key (MaPhong) references PHONGBAN(MaPhong)
@@ -63,4 +69,9 @@ insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLu
 ('000', N'Nguyễn Ngọc', N'Hiếu', '1999-08-27', 1, 'BV', 'NV', 3.1, 3700000.0, '0902124852', N'Quy Nhơn')
 
 
-select * from DSNV
+insert into USERS(TenDangNhap, MatKhau) values
+('truongphonghc123', 'abc123'),
+('phophongkt432', 'pp5678'),
+('truongphongbv098', '234bv')
+
+select * from USERS

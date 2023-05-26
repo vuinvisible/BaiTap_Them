@@ -1,6 +1,6 @@
 ﻿namespace QLNV
 {
-    partial class Form1
+    partial class FormQLNV
     {
         /// <summary>
         /// Required designer variable.
@@ -61,17 +61,20 @@
             this.btLuong = new System.Windows.Forms.Button();
             this.btLamMoi = new System.Windows.Forms.Button();
             this.btSapXep = new System.Windows.Forms.Button();
+            this.menuQLNV = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.gridQLNV)).BeginInit();
             this.grbTTNV.SuspendLayout();
+            this.menuQLNV.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridQLNV
             // 
             this.gridQLNV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridQLNV.Location = new System.Drawing.Point(4, 12);
+            this.gridQLNV.Location = new System.Drawing.Point(7, 27);
             this.gridQLNV.Name = "gridQLNV";
-            this.gridQLNV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridQLNV.Size = new System.Drawing.Size(523, 493);
+            this.gridQLNV.Size = new System.Drawing.Size(523, 478);
             this.gridQLNV.TabIndex = 0;
             this.gridQLNV.SelectionChanged += new System.EventHandler(this.gridQLNV_SelectionChanged);
             // 
@@ -246,7 +249,7 @@
             this.grbTTNV.Controls.Add(this.lbHoDem);
             this.grbTTNV.Controls.Add(this.lbHSL);
             this.grbTTNV.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbTTNV.Location = new System.Drawing.Point(536, 25);
+            this.grbTTNV.Location = new System.Drawing.Point(536, 27);
             this.grbTTNV.Name = "grbTTNV";
             this.grbTTNV.Size = new System.Drawing.Size(492, 366);
             this.grbTTNV.TabIndex = 17;
@@ -327,7 +330,7 @@
             // 
             // btThem
             // 
-            this.btThem.Location = new System.Drawing.Point(545, 397);
+            this.btThem.Location = new System.Drawing.Point(545, 414);
             this.btThem.Name = "btThem";
             this.btThem.Size = new System.Drawing.Size(75, 23);
             this.btThem.TabIndex = 18;
@@ -337,7 +340,7 @@
             // 
             // btXoa
             // 
-            this.btXoa.Location = new System.Drawing.Point(681, 397);
+            this.btXoa.Location = new System.Drawing.Point(681, 414);
             this.btXoa.Name = "btXoa";
             this.btXoa.Size = new System.Drawing.Size(75, 23);
             this.btXoa.TabIndex = 19;
@@ -347,7 +350,7 @@
             // 
             // btCapNhat
             // 
-            this.btCapNhat.Location = new System.Drawing.Point(819, 397);
+            this.btCapNhat.Location = new System.Drawing.Point(819, 414);
             this.btCapNhat.Name = "btCapNhat";
             this.btCapNhat.Size = new System.Drawing.Size(75, 23);
             this.btCapNhat.TabIndex = 20;
@@ -357,7 +360,7 @@
             // 
             // btTim
             // 
-            this.btTim.Location = new System.Drawing.Point(947, 397);
+            this.btTim.Location = new System.Drawing.Point(943, 414);
             this.btTim.Name = "btTim";
             this.btTim.Size = new System.Drawing.Size(75, 23);
             this.btTim.TabIndex = 21;
@@ -367,7 +370,7 @@
             // 
             // btThoat
             // 
-            this.btThoat.Location = new System.Drawing.Point(947, 446);
+            this.btThoat.Location = new System.Drawing.Point(943, 456);
             this.btThoat.Name = "btThoat";
             this.btThoat.Size = new System.Drawing.Size(75, 23);
             this.btThoat.TabIndex = 22;
@@ -377,7 +380,7 @@
             // 
             // btLuong
             // 
-            this.btLuong.Location = new System.Drawing.Point(545, 446);
+            this.btLuong.Location = new System.Drawing.Point(545, 456);
             this.btLuong.Name = "btLuong";
             this.btLuong.Size = new System.Drawing.Size(75, 23);
             this.btLuong.TabIndex = 23;
@@ -387,7 +390,7 @@
             // 
             // btLamMoi
             // 
-            this.btLamMoi.Location = new System.Drawing.Point(681, 446);
+            this.btLamMoi.Location = new System.Drawing.Point(681, 456);
             this.btLamMoi.Name = "btLamMoi";
             this.btLamMoi.Size = new System.Drawing.Size(75, 23);
             this.btLamMoi.TabIndex = 24;
@@ -397,7 +400,7 @@
             // 
             // btSapXep
             // 
-            this.btSapXep.Location = new System.Drawing.Point(819, 446);
+            this.btSapXep.Location = new System.Drawing.Point(819, 456);
             this.btSapXep.Name = "btSapXep";
             this.btSapXep.Size = new System.Drawing.Size(75, 23);
             this.btSapXep.TabIndex = 25;
@@ -405,7 +408,32 @@
             this.btSapXep.UseVisualStyleBackColor = true;
             this.btSapXep.Click += new System.EventHandler(this.btSapXep_Click);
             // 
-            // Form1
+            // menuQLNV
+            // 
+            this.menuQLNV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuQLNV.Location = new System.Drawing.Point(0, 0);
+            this.menuQLNV.Name = "menuQLNV";
+            this.menuQLNV.Size = new System.Drawing.Size(1040, 24);
+            this.menuQLNV.TabIndex = 26;
+            this.menuQLNV.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSave});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // menuSave
+            // 
+            this.menuSave.Name = "menuSave";
+            this.menuSave.Size = new System.Drawing.Size(98, 22);
+            this.menuSave.Text = "Save";
+            this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
+            // 
+            // FormQLNV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -420,13 +448,18 @@
             this.Controls.Add(this.btThem);
             this.Controls.Add(this.grbTTNV);
             this.Controls.Add(this.gridQLNV);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Controls.Add(this.menuQLNV);
+            this.MainMenuStrip = this.menuQLNV;
+            this.Name = "FormQLNV";
+            this.Text = "Quản lí nhân viên";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridQLNV)).EndInit();
             this.grbTTNV.ResumeLayout(false);
             this.grbTTNV.PerformLayout();
+            this.menuQLNV.ResumeLayout(false);
+            this.menuQLNV.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -465,6 +498,9 @@
         private System.Windows.Forms.Button btLuong;
         private System.Windows.Forms.Button btLamMoi;
         private System.Windows.Forms.Button btSapXep;
+        private System.Windows.Forms.MenuStrip menuQLNV;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuSave;
     }
 }
 
