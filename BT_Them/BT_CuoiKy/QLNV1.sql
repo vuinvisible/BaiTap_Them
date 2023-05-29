@@ -70,7 +70,7 @@ insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLu
 
 
 insert into USERS(TenDangNhap, MatKhau) values
-('truongphonghc123', 'abc123'),
+('truonghc123', 'abc123'),
 ('phophongkt432', 'pp5678'),
 ('truongphongbv098', '234bv')
 
