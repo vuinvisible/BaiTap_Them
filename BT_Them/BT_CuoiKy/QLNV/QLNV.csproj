@@ -59,11 +59,11 @@
     <Compile Include="UsCtlDangNhap.Designer.cs">
       <DependentUpon>UsCtlDangNhap.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormQL.cs">
+    <Compile Include="FormQLNV.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormQL.Designer.cs">
-      <DependentUpon>FormQL.cs</DependentUpon>
+    <Compile Include="FormQLNV.Designer.cs">
+      <DependentUpon>FormQLNV.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,8 +73,8 @@
     <EmbeddedResource Include="UsCtlDangNhap.resx">
       <DependentUpon>UsCtlDangNhap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormQL.resx">
-      <DependentUpon>FormQL.cs</DependentUpon>
+    <EmbeddedResource Include="FormQLNV.resx">
+      <DependentUpon>FormQLNV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

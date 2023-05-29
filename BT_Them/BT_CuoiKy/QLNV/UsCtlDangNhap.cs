@@ -40,14 +40,12 @@ namespace QLNV
                     {
                         // Tìm form cha và đóng form hiện tại
                         Form parentForm = this.FindForm();
-                        parentForm.Close();
+                        parentForm.Hide();
 
                         // Hiển thị FormQL
                         FormQLNV f = new FormQLNV();
                         f.Show();
                     }
-
-                    reader.Close();
                 }
             }
         }
