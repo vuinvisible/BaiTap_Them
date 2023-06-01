@@ -338,6 +338,7 @@ namespace QLNV
                         
                         conn.Open();
                         SqlDataReader dr = cmdLuong.ExecuteReader();
+                        
                         if (dr.HasRows)
                         {
                             while (dr.Read())
