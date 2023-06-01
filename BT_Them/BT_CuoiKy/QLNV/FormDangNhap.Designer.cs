@@ -45,7 +45,7 @@
             this.ClientSize = new System.Drawing.Size(472, 493);
             this.Controls.Add(this.usCtlDangNhap1);
             this.Name = "FormDangNhap";
-            this.Text = "FormDangNhap";
+            this.Text = "Đăng nhập";
             this.ResumeLayout(false);
 
         }
