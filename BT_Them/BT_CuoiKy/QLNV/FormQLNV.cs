@@ -342,10 +342,14 @@ namespace QLNV
                         if (dr.HasRows)
                         {
                             while (dr.Read())
+                            {
                                 luongThucNhan = Convert.ToDouble(dr["LuongThucNhan"]);
+                            }
                         }
                         else
+                        {
                             MessageBox.Show("Không tìm thấy thông tin nhân viên với mã " + tbxMaNV.Text);
+                        }
                     }
                     else
                     {
@@ -353,7 +357,7 @@ namespace QLNV
                         return;
                     }
 
-                    MessageBox.Show("Lương thực nhận của nhân viên có mã " + tbxMaNV.Text + " là: " + luongThucNhan.ToString("#,##0") + " VND.");
+                    MessageBox.Show("Lương thực nhận của nhân viên có mã '" + tbxMaNV.Text + "' là: " + luongThucNhan.ToString("#,##0") + " VND.");
                 }
             }
         }
