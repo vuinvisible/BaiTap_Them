@@ -61,12 +61,8 @@
             this.btLuong = new System.Windows.Forms.Button();
             this.btLamMoi = new System.Windows.Forms.Button();
             this.btSapXep = new System.Windows.Forms.Button();
-            this.menuQLNV = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.gridQLNV)).BeginInit();
             this.grbTTNV.SuspendLayout();
-            this.menuQLNV.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridQLNV
@@ -408,31 +404,6 @@
             this.btSapXep.UseVisualStyleBackColor = true;
             this.btSapXep.Click += new System.EventHandler(this.btSapXep_Click);
             // 
-            // menuQLNV
-            // 
-            this.menuQLNV.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuQLNV.Location = new System.Drawing.Point(0, 0);
-            this.menuQLNV.Name = "menuQLNV";
-            this.menuQLNV.Size = new System.Drawing.Size(1040, 24);
-            this.menuQLNV.TabIndex = 26;
-            this.menuQLNV.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSave});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // menuSave
-            // 
-            this.menuSave.Name = "menuSave";
-            this.menuSave.Size = new System.Drawing.Size(98, 22);
-            this.menuSave.Text = "Save";
-            this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
-            // 
             // FormQLNV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -448,18 +419,13 @@
             this.Controls.Add(this.btThem);
             this.Controls.Add(this.grbTTNV);
             this.Controls.Add(this.gridQLNV);
-            this.Controls.Add(this.menuQLNV);
-            this.MainMenuStrip = this.menuQLNV;
             this.Name = "FormQLNV";
             this.Text = "Quản lí nhân viên";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridQLNV)).EndInit();
             this.grbTTNV.ResumeLayout(false);
             this.grbTTNV.PerformLayout();
-            this.menuQLNV.ResumeLayout(false);
-            this.menuQLNV.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -498,9 +464,6 @@
         private System.Windows.Forms.Button btLuong;
         private System.Windows.Forms.Button btLamMoi;
         private System.Windows.Forms.Button btSapXep;
-        private System.Windows.Forms.MenuStrip menuQLNV;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menuSave;
     }
 }
 

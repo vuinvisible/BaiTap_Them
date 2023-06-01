@@ -103,7 +103,7 @@
             this.Controls.Add(this.lbTenDangNhap);
             this.Controls.Add(this.lbDangNhap);
             this.Name = "UsCtlDangNhap";
-            this.Size = new System.Drawing.Size(379, 463);
+            this.Size = new System.Drawing.Size(354, 452);
             this.ResumeLayout(false);
             this.PerformLayout();
 

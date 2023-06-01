@@ -38,7 +38,7 @@ namespace QLNV
             DataTable dt = new DataTable();
             string sqlDSNV = "select * from DSNV";
             da = new SqlDataAdapter(sqlDSNV, connStr);
-            da.Fill(dt);
+            da.Fill(dt); //phương thức Fill của đối tượng SqlDataAdapter để đổ dữ liệu từ cơ sở dữ liệu vào đối tượng DataTable.
             gridQLNV.DataSource = dt;
         }
 
@@ -80,17 +80,17 @@ namespace QLNV
         //    gridQLNV.DataSource = dt;
         //}
 
-        public bool checkMaNV(string manv)
+        public bool checkMaNV(string manv) //Kiểm tra mã nhân viên nhập vào có tồn tại hay không
         {
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection conn = new SqlConnection(connStr)) //Kết nối với cơ sở dữ liệu
             {
                 string sqlCheck = "select * from DSNV where MaNV = @manv";
-                using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn))
+                using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, conn)) //thực thi câu lệnh SQL trên cơ sở dữ liệu
                 {
                     cmdCheck.Parameters.AddWithValue("@manv", manv.Trim());
                     conn.Open();
-                    SqlDataReader dr = cmdCheck.ExecuteReader();
-                    return dr.HasRows;
+                    SqlDataReader dr = cmdCheck.ExecuteReader(); //chứa các dòng trả về từ câu lệnh SQL
+                    return dr.HasRows; //có dòng nào được trả về hay không có thì true không thì false
                 }
             }
         }
@@ -119,9 +119,10 @@ namespace QLNV
 
         private void gridQLNV_SelectionChanged(object sender, EventArgs e)
         {
-            if (gridQLNV.SelectedRows.Count > 0)
+            if (gridQLNV.SelectedRows.Count > 0) //Kiểm tra xem có dòng nào được chọn hay không nếu có thì tiếp tục còn không thì bỏ qua
             {
-                DataGridViewRow Row = gridQLNV.SelectedRows[0];
+                // gán cho nó dòng đầu tiên trong danh sách các dòng được chọn trên DataGridView
+                DataGridViewRow Row = gridQLNV.SelectedRows[0]; // chứa thông tin của nhân viên được chọn.
 
                 tbxMaNV.Text = Row.Cells["MaNV"].Value.ToString();
                 tbxHoDem.Text = Row.Cells["HoDem"].Value.ToString();
@@ -151,7 +152,7 @@ namespace QLNV
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 string sqlAdd = "insert into DSNV(MaNV, HoDem, Ten, NgaySinh, GioiTinh, MaPhong, MaChucVu, HeSoLuong, LuongCoBan, SoDienThoai, DiaChi) " +
-                             "values (@manv, @hd, @ten, @ngs, @gt, @maphong, @mcv, @hsl, @lcb, @sdt, @dc)";
+                                "values (@manv, @hd, @ten, @ngs, @gt, @maphong, @mcv, @hsl, @lcb, @sdt, @dc)";
                 using (SqlCommand cmdAdd = new SqlCommand(sqlAdd, conn))
                 {
                     Boolean gt;
@@ -322,32 +323,28 @@ namespace QLNV
                                   "INNER JOIN CHUCVU ON DSNV.MaChucVu = CHUCVU.MaChucVu " +
                                   "WHERE DSNV.MaNV = @manv";
 
-                using (SqlCommand cmd = new SqlCommand(sqlLuong, conn))
+                using (SqlCommand cmdLuong = new SqlCommand(sqlLuong, conn))
                 {
                     if (string.IsNullOrEmpty(tbxMaNV.Text.Trim()) || !checkMaNV(tbxMaNV.Text.Trim()))
                     {
-                        MessageBox.Show("Vui lòng nhập mã nhân viên để tính lương!");
+                        MessageBox.Show("Vui lòng nhập chính xác mã nhân viên để tính lương!");
                         return;
                     }
 
                     double luongThucNhan = 0;
                     if (checkLCBHSL(tbxLCB.Text.Trim(), tbxHSL.Text.Trim()))
                     {
-                        cmd.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
+                        cmdLuong.Parameters.AddWithValue("@manv", tbxMaNV.Text.Trim());
                         
                         conn.Open();
-                        SqlDataReader dr = cmd.ExecuteReader();
+                        SqlDataReader dr = cmdLuong.ExecuteReader();
                         if (dr.HasRows)
                         {
                             while (dr.Read())
-                            {
                                 luongThucNhan = Convert.ToDouble(dr["LuongThucNhan"]);
-                            }
                         }
                         else
-                        {
                             MessageBox.Show("Không tìm thấy thông tin nhân viên với mã " + tbxMaNV.Text);
-                        }
                     }
                     else
                     {
@@ -382,39 +379,6 @@ namespace QLNV
             da = new SqlDataAdapter(sqlSX, connStr);
             da.Fill(dt);
             gridQLNV.DataSource = dt;
-        }
-
-        private void menuSave_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sv = new SaveFileDialog();
-            sv.Filter = "Text File|*.txt";
-            sv.Title = "Save as";
-            try
-            {
-                if(sv.ShowDialog() == DialogResult.OK)
-                {
-                    using(StreamWriter sw = new StreamWriter(sv.FileName))
-                    {
-                        foreach(DataGridViewRow row in gridQLNV.Rows)
-                        {
-                            string st = "";
-                            for(int i = 0; i < row.Cells.Count; i++)
-                            {
-                                if (row.Cells[i] != null && row.Cells[i].Value != null) //Nếu ô tồn tại và có giá trị thì sẽ được thêm vào chuỗi.
-                                {
-                                    st += row.Cells[i].Value.ToString() + ", ";
-                                }
-                            }
-                            sw.WriteLine(st);
-                        }
-                    }
-                    MessageBox.Show("Lưu thông tin nhân viên thành công!");
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Lưu thông tin nhân viên thất bại! Lỗi: " + ex.Message);
-            }
         }
 
     }

@@ -11,7 +11,6 @@
 492, Đinh Thị Lưu, Xuyến, 2/16/2002 12:00:00 AM, False, KT, PP, 4.5, 5000000, 0902423245, Quy Nhơn, 
 794, Phạm Văn, Đồng, 1/25/2003 12:00:00 AM, True, NS, NV, 3.8, 5900000, 0902129852, Quy Nhơn, 
 abc, Đỗ Ngọc Như, Điệp, 1/13/2003 12:00:00 AM, False, KT, NV, 3.2, 4000000, 0902269782, Quy Nhơn, 
-wjo, Mai  Âm, Nhạc, 7/1/1994 8:29:30 AM, False, DV, NV, 5, 38000000, 0902165874, Hồ Chí Minh, 
-wjo2, Mai  Âm, Thanh, 7/1/1994 8:29:30 AM, False, DV, NV, 4, 48000000, 0902165874, Hồ Chí Minh, 
-wjo1, Mai  Âm, Điệu, 7/1/1994 8:29:30 AM, False, DV, NV, 5.4, 68000000, 0902165874, Hồ Chí Minh, 
+nv23, Vũ, Long, 7/3/2009 9:14:51 AM, True, NS, NV, 2.5, 2850000, 0902658436, Phù Cát, 
+wjo, Mai  Âm, Nhạc, 7/1/1994 8:29:30 AM, False, DV, NV, 5, 68000000, 0902165874, Hồ Chí Minh, 
 

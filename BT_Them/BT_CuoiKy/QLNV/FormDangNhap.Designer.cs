@@ -33,7 +33,7 @@
             // 
             // usCtlDangNhap1
             // 
-            this.usCtlDangNhap1.Location = new System.Drawing.Point(47, 12);
+            this.usCtlDangNhap1.Location = new System.Drawing.Point(43, 21);
             this.usCtlDangNhap1.Name = "usCtlDangNhap1";
             this.usCtlDangNhap1.Size = new System.Drawing.Size(379, 438);
             this.usCtlDangNhap1.TabIndex = 0;
