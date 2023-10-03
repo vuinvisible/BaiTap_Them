@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.Linq;
 using System.Data.SqlClient;
 using System.IO;
+using QLNV;
 
 namespace QLNV
 {
@@ -20,7 +21,8 @@ namespace QLNV
             InitializeComponent();
         }
 
-        string connStr = "Server = LAB1-MAY11\\SQLEXPRESS; Database = QLNV1; Trusted_Connection = true";
+        //string connStr = "Server = ANHVU\\SQLEXPRESS; Database = QLNV; Trusted_Connection = true";
+        string connStr = "Data Source = ANHVU; Initial Catalog = QLNV; Integrated Security = True";
         DataSet ds = new DataSet();
         SqlDataAdapter da;
 

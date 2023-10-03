@@ -18,8 +18,9 @@ namespace QLNV
         {
             InitializeComponent();
         }
-        
-        string connStr = "Server = LAB1-MAY11\\SQLEXPRESS; Database = QLNV1; Trusted_Connection = true";
+
+        //string connStr = "Server = ANHVU\\SQLEXPRESS; Database = QLNV; Trusted_Connection = true";
+        string connStr = "Data Source = ANHVU; Initial Catalog = QLNV; Integrated Security = True";
 
         private void btDangNhap_Click(object sender, EventArgs e)
         {

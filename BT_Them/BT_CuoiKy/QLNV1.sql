@@ -1,6 +1,6 @@
-﻿create database QLNV1
-use QLNV1
-drop database QLNV1
+﻿create database QLNV
+use QLNV
+/*drop database QLNV*/
 create table PHONGBAN(
 	MaPhong varchar(10) primary key not null,
 	TenPhong nvarchar(20) not null
@@ -32,13 +32,13 @@ create table USERS(
 	MatKhau varchar(100) not null
 )
 
-drop table DSNV
+/*drop table DSNV*/
 
 alter table DSNV add constraint fk_MaPhong foreign key (MaPhong) references PHONGBAN(MaPhong)
 alter table DSNV add constraint fk_MaChucVu foreign key (MaChucVu) references CHUCVU(MaChucVu)
 
-alter table DSNV drop constraint fk_MaPhong
-alter table DSNV drop constraint fk_MaChucVu
+/*alter table DSNV drop constraint fk_MaPhong
+alter table DSNV drop constraint fk_MaChucVu*/
 
 insert into PHONGBAN(MaPhong, TenPhong) values 
 ('BV', N'Bảo vệ'),
